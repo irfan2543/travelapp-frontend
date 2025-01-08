@@ -4,11 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/output.css">
-    <title>Document</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    defer
+    />
+    <title>Travel Indonesia</title>
 </head>
 <body>
 <div>
-    <h1 class="text-3xl font-bold">WELCOME GEYS</h1>
-</div>
+    <div id="headerPage"></div>
+    <div id="contentPage" class="flex flex-col">
+        <div class="bg-[url('/assets/img/banner-bg.jpg')] bg-cover w-full h-[43rem]">
+
+        </div>
+        <div class="flex flex-col justify-center items-center my-8">
+            <div class="my-8">
+                <h1 class="font-bold text-2xl">CUACA KOTA INDONESIA</h1>
+            </div>
+            <div class="w-full relative">
+                <div class="swiper w-7/12 bg-[url('/assets/img/weather-city.png')] h-[30rem] bg-cover">
+                    <div class="slide-container-weather ">
+                        <div id="weatherData" class="swiper-wrapper flex items-center"> 
+                        </div>
+                        <div class="swiper-button-next swiper-navBtn !block z-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-8 text-xl text-white font-bold w-full">
+            <div class="flex flex-row w-7/12 mx-auto space-x-7">
+                <div class="flex-1 bg-[#1f3646] hover:bg-yellow-300 hover:delay-75 transition delay-75 hover:scale-125">
+                    <div class="flex flex-col items-center space-y-5">
+                        <div class="flex justify-center mt-5 w-10/12">
+                            <img src="./assets/img/icon/plane.png" alt="plane-icon" width="150px" height="150px">
+                        </div>
+                        <div class="text-center w-10/12">
+                            <h2>Perencanaan Perjalanan</h2>
+                        </div>
+                        <div class="text-lg font-semibold text-center w-10/12">
+                            <p>Pengguna bisa merencanakan perjalanan dengan mudah, mulai dari pemilihan destinasi, pengaturan jadwal, hingga pemesanan tiket.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#1f3646] hover:bg-yellow-300 hover:delay-75 transition delay-75 flex-1 hover:scale-125">
+                    <div class="flex flex-col items-center space-y-5">
+                        <div class="flex justify-center mt-5 w-10/12">
+                            <img src="./assets/img/icon/route.png" alt="route-icon" width="150px" height="150px">
+                        </div>
+                        <div class="text-center w-10/12">
+                            <h2>Informasi Destinasi</h2>
+                        </div>
+                        <div class="text-lg font-semibold text-center w-10/12">
+                            <p>Menyediakan informasi terkini tentang destinasi, cuaca, tempat wisata, restoran, dan tips perjalanan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#1f3646] hover:bg-yellow-300 hover:delay-75 transition delay-75 flex-1 hover:scale-125">
+                    <div class="flex flex-col items-center space-y-5">
+                        <div class="flex justify-center mt-5 w-10/12">
+                            <img src="./assets/img/icon/rating.png" alt="rating-icon" width="150px" height="150px">
+                        </div>
+                        <div class="text-center w-10/12">
+                            <h2>Review Perjalanan</h2>
+                        </div>
+                        <div class="text-lg font-semibold text-center w-10/12">
+                            <p>Pengguna dapat memberikan ulasan dan saran berdasarkan pengalaman mereka.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div  class="flex flex-col my-10">
+            <div class="font-bold text-2xl my-10 text-center ">
+                <p>WISATA INDONESIA</p>
+            </div>
+            <div class="swiper flex flex-row bg-red-500 w-[750px]">
+                <div class="slide-container-place w-[750px]"> 
+                    <div id="mostPlace" class="swiper-wrapper flex items-center">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footerPage"></div>
+    <script src="./assets/js/index.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 </body>
 </html>
