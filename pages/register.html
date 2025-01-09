@@ -4,7 +4,139 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="assets/js/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>REGISTRASI</title>
   </head>
-  <body></body>
+  <body
+    class="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
+  >
+    <!-- background image -->
+
+    <!-- tabel form -->
+    <div
+      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10"
+    >
+      <!-- teks login -->
+      <div class="w-full">
+        <div class="text-center">
+          <h1 class="text-3xl font-semibold text-gray-900">REGISTRASI</h1>
+          <p class="mt-2 text-gray-500">Daftar untuk membuat akun anda</p>
+        </div>
+        <div class="mt-5">
+          <form action="" id="LoginForm">
+            <!-- first name -->
+            <div class="relative mt-6">
+              <input
+                type="text"
+                name="Frist-Name"
+                id="first-name"
+                placeholder="Frist-Name"
+                class="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                required
+              />
+              <label
+                for="first-name"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Frist Name</label
+              >
+            </div>
+
+            <!-- last name -->
+            <div class="relative mt-6">
+              <input
+                type="text"
+                name="Last-name"
+                id="last-name"
+                placeholder="last-name"
+                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                required
+              />
+              <label
+                for="last-name"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Last Name</label
+              >
+            </div>
+
+            <!-- email -->
+            <div class="relative mt-6">
+              <input
+                type="email"
+                name="email"
+                id="emaile"
+                placeholder="email"
+                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                required
+              />
+              <label
+                for="email"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Email</label
+              >
+            </div>
+
+            <!-- PW -->
+            <div class="relative mt-6">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password"
+                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                required
+              />
+              <label
+                for="password"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                >Password</label
+              >
+            </div>
+
+            <!-- tombol kirim -->
+            <div class="my-6">
+              <button
+                type="submit"
+                class="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("LoginForm")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+          const firstName = document.getElementsByName("Frist-Name").value;
+          const LastName = document.getElementsByName("Last-name").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+        });
+
+      // data buat Beckend
+      const kirimKeBeckend = () => {
+        const firstName = document.getElementsByName("Frist-Name").value;
+        const LastName = document.getElementsByName("Last-name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const dataBuatBeckend = {
+          firstName: firstName,
+          LastName: LastName,
+          email: email,
+          password: password,
+        };
+
+        // kirim data ke beckend
+        axios.post("", dataBuatBeckend).then((response) => {
+          alert("Registrasi Berhasil");
+          window.location.href = "booking.html";
+        });
+      };
+    </script>
+  </body>
 </html>
