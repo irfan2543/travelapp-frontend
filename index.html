@@ -4,19 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/output.css">
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    defer
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" defer/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <title>Travel Indonesia</title>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
 <div>
     <div id="headerPage"></div>
     <div id="contentPage" class="flex flex-col">
-        <div class="bg-[url('/assets/img/banner-bg.jpg')] bg-cover w-full h-[43rem]">
-
+        <div class="bg-[url('/assets/img/banner-bg.jpg')] bg-cover w-full h-[43rem] flex flex-row">
+            <div class="basis-3/5 flex flex-col bg-black bg-opacity-30">
+                <div class=" flex items-center justify-center flex-1">
+                    <img src="./assets/img/logo.png" alt="logo-penerbangan">
+                </div>
+                <div class="flex-1  flex flex-col items-center justify-center space-y-10">
+                    <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signIn-btn">MASUK</button></div>
+                    <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signUp-btn">MENDAFTAR</button></div>
+                </div>
+                <div class="flex-1"></div>
+            </div>
+            <div class="basis-3/4 flex items-center justify-center">
+                <div class="flex flex-col bg-white h-3/6 w-4/6">
+                    <div class="basis-2/6 font-bold text-lg py-5 tracking-wider border border-b-8 border-b-slate-500">
+                        <h1 class="ml-5">Rute Penerbangan</h1>
+                    </div>
+                    <div class="flex flex-col font-semibold space-y-3 my-3">
+                        <label for="date-picker" class="ml-5">Tanggal Keberangkatan</label>
+                            <div class="relative ml-5">
+                                <input 
+                                type="date"
+                                id="date-picker"
+                                class="h-10 peer w-4/12 rounded-[7px] border border-blue-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                placeholder="Pilih Tanggal"
+                                />
+                            </div>
+                    </div>
+                    <div class="flex flex-row mb-2 font-semibold">
+                        <div class="flex-1 flex flex-col items-start justify-start">
+                            <label for="routeDeparture" class="ml-5">Keberangkatan: </label>
+                            <select name="Departure Route" id="routeDeparture" class="h-10 cursor-pointer w-2/4 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
+                                <option value="1">Indonesia</option>
+                                <option value="1">Indonesia</option>
+                                <option value="1">Indonesia</option>
+                            </select>
+                        </div>
+                        <div class="flex-1 flex flex-col items-start justify-start">
+                            <label for="routeArrival" class="ml-5">Tujuan: </label>
+                            <select name="Arrival Route" id="routeArrival" class="h-10 cursor-pointer w-2/4 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
+                                <option value="1">Bangladesh</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="h-full">
+                        <button  class="ml-5 mt-5 border rounded-xl bg-yellow-300 w-44 h-10" id="flightRoute">Lihat Penerbangan</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="flex flex-col justify-center items-center my-8">
             <div class="my-8">
@@ -80,10 +124,12 @@
             <div class="font-bold text-2xl my-10 text-center ">
                 <p>WISATA INDONESIA</p>
             </div>
-            <div class="swiper flex flex-row bg-red-500 w-[750px]">
-                <div class="slide-container-place w-[750px]"> 
-                    <div id="mostPlace" class="swiper-wrapper flex items-center">
-
+            <div class="w-full relative ">
+                <div class="swiper w-7/12 h-[20rem]">
+                    <div class="slide-container-place"> 
+                        <div id="mostPlace" class="swiper-wrapper flex items-center ">
+    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,5 +138,6 @@
     <div id="footerPage"></div>
     <script src="./assets/js/index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.0/dist/flowbite.min.js" defer></script>
 </body>
 </html>
