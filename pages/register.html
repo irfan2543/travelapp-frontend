@@ -124,7 +124,6 @@
             email: email,
             password: password,
           };
-
           // kirim data ke beckend
           axios.post("", dataBuatBeckend).then((response) => {
             if (response.data.status === "success") {
