@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="assets/js/axios.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/output.css" />
     <title>LOGIN</title>
   </head>
   <body
@@ -102,26 +101,29 @@
         .getElementById("LoginForm")
         .addEventListener("submit", (event) => {
           event.preventDefault();
+
+          // data dari form
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
+
+          // data buat Beckend
+          const dataBuatBeckend = {
+            email: email,
+            password: password,
+          };
+
+          // kirim data ke beckend
+          axios.post("", dataBuatBeckend).then((response) => {
+            if (condition) {
+              alert("Login Berhasil");
+              window.location.href = "index.html";
+            } else {
+              alert(
+                `Login gagal: ${response.data.message || "Terjadi Kesalahan"} `
+              );
+            }
+          });
         });
-
-      // data buat Beckend
-      const kirimKeBeckend = () => {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        const dataBuatBeckend = {
-          email: email,
-          password: password,
-        };
-
-        // kirim data ke beckend
-        axios.post("", dataBuatBeckend).then((response) => {
-          alert("Login Berhasil");
-          window.location.href = "booking.html";
-        });
-      };
     </script>
   </body>
 </html>
