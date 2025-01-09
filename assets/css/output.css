@@ -610,13 +610,7 @@ video {
   margin-bottom: 2rem;
 }
 
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
-.my-2 {
-  margin-top: 0.5rem;
+.mb-2 {
   margin-bottom: 0.5rem;
 }
 
@@ -652,10 +646,6 @@ video {
   margin-top: 1.25rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
 .\!block {
   display: block !important;
 }
@@ -664,8 +654,16 @@ video {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
 .h-1\/5 {
   height: 20%;
+}
+
+.h-10 {
+  height: 2.5rem;
 }
 
 .h-20 {
@@ -696,34 +694,6 @@ video {
   height: 100%;
 }
 
-.h-32 {
-  height: 8rem;
-}
-
-.h-16 {
-  height: 4rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
-.h-4 {
-  height: 1rem;
-}
-
-.h-12 {
-  height: 3rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-9 {
-  height: 2.25rem;
-}
-
 .w-10\/12 {
   width: 83.333333%;
 }
@@ -738,6 +708,10 @@ video {
 
 .w-4\/6 {
   width: 66.666667%;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .w-6 {
@@ -760,24 +734,12 @@ video {
   width: 100%;
 }
 
-.w-5 {
-  width: 1.25rem;
+.w-3\/4 {
+  width: 75%;
 }
 
-.w-20 {
-  width: 5rem;
-}
-
-.w-32 {
-  width: 8rem;
-}
-
-.w-44 {
-  width: 11rem;
-}
-
-.w-full {
-  width: 100%;
+.w-11\/12 {
+  width: 91.666667%;
 }
 
 .flex-1 {
@@ -806,6 +768,10 @@ video {
           appearance: none;
 }
 
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -818,8 +784,16 @@ video {
   flex-wrap: wrap;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .justify-center {
@@ -828,6 +802,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .space-x-7 > :not([hidden]) ~ :not([hidden]) {
@@ -906,10 +884,6 @@ video {
   border-bottom-color: rgb(100 116 139 / var(--tw-border-opacity, 1));
 }
 
-.border-t-transparent {
-  border-top-color: transparent;
-}
-
 .bg-\[\#1f3646\] {
   --tw-bg-opacity: 1;
   background-color: rgb(31 54 70 / var(--tw-bg-opacity, 1));
@@ -930,6 +904,11 @@ video {
   background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
 }
 
+.bg-indigo-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(165 180 252 / var(--tw-bg-opacity, 1));
+}
+
 .bg-transparent {
   background-color: transparent;
 }
@@ -939,19 +918,9 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
-.bg-yellow-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 240 138 / var(--tw-bg-opacity, 1));
-}
-
 .bg-yellow-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(253 224 71 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
 .bg-opacity-30 {
@@ -962,14 +931,6 @@ video {
   --tw-bg-opacity: 0.5;
 }
 
-.bg-\[url\(\'\/assets\/img\/banner-bg\.jpg\'\)\] {
-  background-image: url('/assets/img/banner-bg.jpg');
-}
-
-.bg-\[url\(\'\/assets\/img\/weather-city\.png\'\)\] {
-  background-image: url('/assets/img/weather-city.png');
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -978,8 +939,20 @@ video {
   padding: 0.25rem !important;
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-4 {
   padding: 1rem;
+}
+
+.p-7 {
+  padding: 1.75rem;
 }
 
 .px-3 {
@@ -1030,6 +1003,11 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -1198,10 +1176,6 @@ video {
   border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
 }
 
-.focus\:border-t-transparent:focus {
-  border-top-color: transparent;
-}
-
 .focus\:shadow-md:focus {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
@@ -1219,6 +1193,18 @@ video {
 
 .disabled\:border-0:disabled {
   border-width: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-indigo-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(55 48 163 / var(--tw-bg-opacity, 1));
+  }
+
+  .dark\:text-indigo-400 {
+    --tw-text-opacity: 1;
+    color: rgb(129 140 248 / var(--tw-text-opacity, 1));
+  }
 }
 
 .\[\&\>div\.flatpickr-month\]\:-translate-y-3>div.flatpickr-month {

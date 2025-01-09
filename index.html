@@ -11,14 +11,16 @@
 </head>
 <body>
 <div>
+    
     <div id="headerPage"></div>
     <div id="contentPage" class="flex flex-col">
-        <div class="bg-[url('/assets/img/banner-bg.jpg')] bg-cover w-full h-[43rem] flex flex-row">
+        <!-- Cover Banner -->
+        <div style="background-image: url('/travelapp-frontend/assets/img/banner-bg.jpg');" class="bg-cover w-full h-[43rem] flex flex-row">
             <div class="basis-3/5 flex flex-col bg-black bg-opacity-30">
                 <div class=" flex items-center justify-center flex-1">
                     <img src="./assets/img/logo.png" alt="logo-penerbangan">
                 </div>
-                <div class="flex-1  flex flex-col items-center justify-center space-y-10">
+                <div class="flex-1  flex flex-col items-center justify-center space-y-10" id="loginDiv">
                     <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signIn-btn">MASUK</button></div>
                     <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signUp-btn">MENDAFTAR</button></div>
                 </div>
@@ -43,31 +45,28 @@
                     <div class="flex flex-row mb-2 font-semibold">
                         <div class="flex-1 flex flex-col items-start justify-start">
                             <label for="routeDeparture" class="ml-5">Keberangkatan: </label>
-                            <select name="Departure Route" id="routeDeparture" class="h-10 cursor-pointer w-2/4 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
-                                <option value="1">Indonesia</option>
-                                <option value="1">Indonesia</option>
-                                <option value="1">Indonesia</option>
+                            <select name="Departure Route" id="routeDeparture" class="h-10 cursor-pointer w-11/12 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
                             </select>
                         </div>
                         <div class="flex-1 flex flex-col items-start justify-start">
                             <label for="routeArrival" class="ml-5">Tujuan: </label>
-                            <select name="Arrival Route" id="routeArrival" class="h-10 cursor-pointer w-2/4 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
-                                <option value="1">Bangladesh</option>
+                            <select name="Arrival Route" id="routeArrival" class="h-10 cursor-pointer w-11/12 ml-5 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded pl-3 pr-8 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none">
                             </select>
                         </div>
                     </div>
                     <div class="h-full">
-                        <button  class="ml-5 mt-5 border rounded-xl bg-yellow-300 w-44 h-10" id="flightRoute">Lihat Penerbangan</button>
+                        <button  class="ml-5 mt-5 border rounded-xl bg-yellow-300 w-44 h-10" id="flightRoute-btn">Lihat Penerbangan</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Cuaca Indonesia -->
         <div class="flex flex-col justify-center items-center my-8">
             <div class="my-8">
                 <h1 class="font-bold text-2xl">CUACA KOTA INDONESIA</h1>
             </div>
             <div class="w-full relative">
-                <div class="swiper w-7/12 bg-[url('/assets/img/weather-city.png')] h-[30rem] bg-cover">
+                <div style="background-image: url('/travelapp-frontend/assets/img/weather-city.png');" class="swiper w-7/12 h-[30rem] bg-cover">
                     <div class="slide-container-weather ">
                         <div id="weatherData" class="swiper-wrapper flex items-center"> 
                         </div>
@@ -76,6 +75,7 @@
                 </div>
             </div>
         </div>
+        <!-- Kelebihan Penerbangan -->
         <div class="my-8 text-xl text-white font-bold w-full">
             <div class="flex flex-row w-7/12 mx-auto space-x-7">
                 <div class="flex-1 bg-[#1f3646] hover:bg-yellow-300 hover:delay-75 transition delay-75 hover:scale-125">
@@ -120,7 +120,8 @@
             </div>
             
         </div>
-        <div  class="flex flex-col my-10">
+        <!-- Wisata Indonesia -->
+        <div class="flex flex-col my-10">
             <div class="font-bold text-2xl my-10 text-center ">
                 <p>WISATA INDONESIA</p>
             </div>
@@ -137,6 +138,7 @@
     </div>
     <div id="footerPage"></div>
     <script src="./assets/js/index.js" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.0/dist/flowbite.min.js" defer></script>
 </body>
