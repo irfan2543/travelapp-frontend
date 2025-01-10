@@ -2,8 +2,16 @@ const apiKeyWeather = '79bd65514dea072ce5a3b6d95da22e79';
 let weatherData = []
 let weatherDiv = document.getElementById('weatherData')
 let mostPlaceIndonesia = document.getElementById('mostPlace')
-let signInBtn = document.getElementById('signIn-btn')
-let signUpBtn = document.getElementById('signUp-btn')
+let flightRouteBtn = document.getElementById('flightRoute-btn')
+
+const fetchCities = () =>{
+
+    axios.get('http://localhost:3002/city')
+    .then((response) =>
+        dataCities(response.data)
+    )
+}
+
 
 const loadFooter = async () => {
 
@@ -108,7 +116,6 @@ const placeVisit = () =>{
             {name: "Pulau Komodo", city: "Nusa Tenggara Timur", img: "https://images.tokopedia.net/blog-tokopedia-com/uploads/2018/11/pulau-komodo.jpg"},
             {name: "Kawah Ijen", city: "Jawa Timur", img: "https://images.tokopedia.net/blog-tokopedia-com/uploads/2018/11/kawah-ijen.jpg"},
         ]
-        console.log(mostPlace)
 
         mostPlace.forEach((response) => {
             let mostPlaceDiv = document.createElement('div')
@@ -132,7 +139,7 @@ const placeVisit = () =>{
                     loop: true,
                     disableOnInteraction: true,
                     autoplay: {
-                        delay: 1000,
+                        delay: 3000,
                         
                     },
                     grabCursor: "true",
@@ -146,11 +153,47 @@ const placeVisit = () =>{
     }
 }
 
-signInBtn.addEventListener('click', () => {
+// const userFeature = () =>{
+
+//     let checkUser = localStorage.getItem()
+    
+//     try{
+//         if()
+//     }catch(error){
+//         console.error("message ===> ", error)
+//     }
+
+// }
+
+const dataCities = (data) =>{
+
+    let routeDeparture = document.getElementById('routeDeparture')
+    let routeArrival = document.getElementById('routeArrival')
+
+    console.log(data)
+
+    try{
+        
+    routeDeparture.innerHTML = data.map((response) =>`
+        <option value="${response.id}">${response.alias_kota} - ${response.kota}</option>
+        `
+    )
+
+    routeArrival.innerHTML = data.map((response) =>` 
+        <option value="${response.id}">${response.alias_kota} - ${response.kota}</option>
+        `
+    )
+    }catch(error) {
+        console.error("Message => ", error)
+    }
+
+}
+
+let signInBtn = document.getElementById('signIn-btn').addEventListener('click', () =>{
     window.location.href = './pages/login.html'
 })
 
-signUpBtn.addEventListener('click', () => {
+let signUpBtn = document.getElementById('signUp-btn').addEventListener('click', () =>{
     window.location.href = './pages/register.html'
 })
 
@@ -176,6 +219,7 @@ const datePicker = () =>{
     calendarDaysContainer.className = `${calendarDaysContainer.className} [&_span.flatpickr-day]:!rounded-md [&_span.flatpickr-day.selected]:!bg-gray-900 [&_span.flatpickr-day.selected]:!border-gray-900`;
 }
 
+fetchCities()
 datePicker()
 placeVisit()
 weatherDataMap()
