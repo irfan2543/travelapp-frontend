@@ -1,7 +1,7 @@
 {
   "name": "travelapp-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuDfD2gx7wmqJ4Y4mWe3JTDU80Rg5URtdoqQ&s\" width=\"400\" alt=\"Javascript Logo\"></a></p>",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
