@@ -15,7 +15,15 @@
     "tailwindcss": "^3.4.17"
   },
   "dependencies": {
-    "swiper": "^11.2.0",
-    "axios": "^1.7.9"
-  }
+    "axios": "^1.7.9",
+    "swiper": "^11.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irfan2543/travelapp-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/irfan2543/travelapp-frontend/issues"
+  },
+  "homepage": "https://github.com/irfan2543/travelapp-frontend#readme"
 }

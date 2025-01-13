@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../assets/css/output.css" rel="stylesheet" />
+    <title>Detail Transaksi</title>
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+      <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+        <h1 class="text-2xl font-bold text-center mb-6">Detail Transaksi</h1>
+        <div class="space-y-4">
+          <div>
+            <h2 class="font-semibold text-lg">Informasi Pengguna</h2>
+            <p id="user-name" class="text-gray-600"></p>
+            <p id="user-email" class="text-gray-600"></p>
+          </div>
+          <div>
+            <h2 class="font-semibold text-lg">Informasi Penerbangan</h2>
+            <p id="flight-route" class="text-gray-600"></p>
+            <p id="flight-date" class="text-gray-600"></p>
+            <p id="airline" class="text-gray-600"></p>
+          </div>
+          <div>
+            <h2 class="font-semibold text-lg">Kursi yang Dipilih</h2>
+            <div id="selected-seats" class="grid grid-cols-4 gap-2"></div>
+          </div>
+          <div>
+            <h2 class="font-semibold text-lg">Detail Harga</h2>
+            <p id="ticket-price" class="text-gray-600"></p>
+            <p id="tax-price" class="text-gray-600"></p>
+            <p id="total-price" class="text-gray-800 font-bold"></p>
+          </div>
+          <div>
+            <h2 class="font-semibold text-lg">Metode Pembayaran</h2>
+            <select id="payment-method" class="w-full p-2 border rounded-lg">
+              <option>E-Wallet (OVO)</option>
+              <option>Kartu Kredit</option>
+              <option>Transfer Bank</option>
+            </select>
+          </div>
+          <div>
+            <button
+              class="w-full bg-yellow-300 hover:bg-green-600 text-white font-bold py-2 rounded-lg"
+            >
+              Konfirmasi Pembayaran
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const userName = "Budi Santoso";
+      const userEmail = "budi@example.com";
+      const flightRoute = "Jakarta (CGK) - Bali (DPS)";
+      const flightDate = "12 Januari 2025";
+      const airline = "Garuda Indonesia";
+      const selectedSeats = ["04", "05", "06", "07"];
+      const ticketPrice = 1200000;
+      const taxPrice = 300000;
+      const totalPrice = ticketPrice + taxPrice;
+
+      document.getElementById("user-name").textContent = `Nama: ${userName}`;
+      document.getElementById("user-email").textContent = `Email: ${userEmail}`;
+      document.getElementById(
+        "flight-route"
+      ).textContent = `Rute: ${flightRoute}`;
+      document.getElementById(
+        "flight-date"
+      ).textContent = `Tanggal: ${flightDate}`;
+      document.getElementById("airline").textContent = `Maskapai: ${airline}`;
+      document.getElementById(
+        "ticket-price"
+      ).textContent = `Harga Tiket: Rp ${ticketPrice.toLocaleString()}`;
+      document.getElementById(
+        "tax-price"
+      ).textContent = `Pajak: Rp ${taxPrice.toLocaleString()}`;
+      document.getElementById(
+        "total-price"
+      ).textContent = `Total: Rp ${totalPrice.toLocaleString()}`;
+
+      const seatsContainer = document.getElementById("selected-seats");
+      selectedSeats.forEach((seat) => {
+        const seatDiv = document.createElement("div");
+        seatDiv.textContent = seat;
+        seatDiv.className = "p-2 bg-indigo-300 rounded-lg text-center";
+        seatsContainer.appendChild(seatDiv);
+      });
+      let timeLeft = 600;
+      const countdownElement = document.getElementById("countdown");
+
+      function updateCountdown() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        countdownElement.textContent = `${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+        if (timeLeft === 0) {
+          alert("Waktu pembayaran habis! Halaman akan direset.");
+          window.location.reload();
+        } else {
+          timeLeft--;
+        }
+      }
+      setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
