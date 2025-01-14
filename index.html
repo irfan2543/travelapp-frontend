@@ -1,37 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="!scroll-smooth" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/output.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" defer/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-    <title>Travel Indonesia</title>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <title>Aerotria Travel</title>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
-<body>
-<div>
-    
-    <div id="headerPage"></div>
+<body class="!scroll-smooth">
     <div id="contentPage" class="flex flex-col">
         <!-- Cover Banner -->
-        <div style="background-image: url('/travelapp-frontend/assets/img/banner-bg.jpg');" class="bg-cover w-full h-[43rem] flex flex-row">
+        <div data-aos="fade-up" data-aos-delay="500" data-aos-duration ="1000" style="background-image: url('./assets/img/banner-bg.jpg');" class="bg-cover w-full h-[43rem] flex flex-row">
             <div class="basis-3/5 flex flex-col bg-black bg-opacity-30">
-                <div class=" flex items-center justify-center flex-1">
+                <div class="flex items-center justify-center flex-1">
                     <img src="./assets/img/logo.png" alt="logo-penerbangan">
                 </div>
-                <div class="flex-1  flex flex-col items-center justify-center space-y-10" id="loginDiv">
-                    <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signIn-btn">MASUK</button></div>
-                    <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-full" id="signUp-btn">MENDAFTAR</button></div>
+                <div class="" id="userAuth">
+                    
                 </div>
                 <div class="flex-1">
-                    <p>tes</p>
                 </div>
             </div>
             <div class="basis-3/4 flex items-center justify-center">
                 <div class="flex flex-col bg-white h-3/6 w-4/6">
                     <div class="basis-2/6 font-bold text-lg py-5 tracking-wider border border-b-8 border-b-slate-500">
-                        <h1 class="ml-5">Rute Penerbangan</h1>
+                        <div class="flex-1"><h1 class="ml-5">Rute Penerbangan</h1></div>
                     </div>
                     <div class="flex flex-col font-semibold space-y-3 my-3">
                         <label for="date-picker" class="ml-5">Tanggal Keberangkatan</label>
@@ -57,18 +53,18 @@
                         </div>
                     </div>
                     <div class="h-full">
-                        <button  class="ml-5 mt-5 border rounded-xl bg-yellow-300 w-44 h-10" id="flightRoute-btn">Lihat Penerbangan</button>
+                        <button  class="ml-5 mt-5 border rounded-xl bg-yellow-300 w-44 h-10 hover:scale-110" id="flightRoute-btn">Lihat Penerbangan</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Cuaca Indonesia -->
-        <div class="flex flex-col justify-center items-center my-8">
+        <div data-aos="fade-up" data-aos-delay="500" data-aos-duration ="1000"  class="flex flex-col justify-center items-center my-8" >
             <div class="my-8">
-                <h1 class="font-bold text-2xl">CUACA KOTA INDONESIA</h1>
+                <h1 class="font-bold text-2xl animate-fade-up animate-once animate-duration-1000 animate-delay-500 animate-ease-in animate-normal">CUACA KOTA INDONESIA</h1>
             </div>
             <div class="w-full relative">
-                <div style="background-image: url('/travelapp-frontend/assets/img/weather-city.png');" class="swiper w-7/12 h-[30rem] bg-cover">
+                <div style="background-image: url('./assets/img/weather-city.png');" class="swiper w-7/12 h-[30rem] bg-cover">
                     <div class="slide-container-weather ">
                         <div id="weatherData" class="swiper-wrapper flex items-center"> 
                         </div>
@@ -78,7 +74,7 @@
             </div>
         </div>
         <!-- Kelebihan Penerbangan -->
-        <div class="my-8 text-xl text-white font-bold w-full">
+        <div data-aos="fade-up" data-aos-delay="500" data-aos-duration ="1000"  class="my-8 text-xl text-white font-bold w-full">
             <div class="flex flex-row w-7/12 mx-auto space-x-7">
                 <div class="flex-1 bg-[#1f3646] hover:bg-yellow-300 hover:delay-75 transition delay-75 hover:scale-125">
                     <div class="flex flex-col items-center space-y-5">
@@ -123,7 +119,7 @@
             
         </div>
         <!-- Wisata Indonesia -->
-        <div class="flex flex-col my-10">
+        <div data-aos="fade-up" data-aos-delay="500" data-aos-duration ="1000"  class="flex flex-col my-10">
             <div class="font-bold text-2xl my-10 text-center ">
                 <p>WISATA INDONESIA</p>
             </div>
@@ -140,8 +136,11 @@
     </div>
     <div id="footerPage"></div>
     <script src="./assets/js/index.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.0/dist/flowbite.min.js" defer></script>
+    <script src="https://www.tailwindcss-animated.com/configurator.html?animation=fade-up&count=once&duration=1000&delay=500&ease=ease-in&direction=normal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </body>
 </html>
