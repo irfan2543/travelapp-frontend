@@ -4,19 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/output.css" />
-    <title>REGISTRASI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Aerotria Register</title>
   </head>
   <body
-    class="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
+    class="flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat relative"
   >
+   <!-- Header Page -->
+  <div id="header-page" class="bg-gray-500 w-full ">
+
+  </div>
     <!-- tabel form -->
     <div
-      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10"
+      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10 mt-20"
     >
       <!-- teks login -->
       <div class="w-full">
         <div class="text-center">
-          <h1 class="text-3xl font-semibold text-gray-900">REGISTRASI</h1>
+          <h1 class="text-3xl font-semibold text-gray-900">PENDAFTARAN</h1>
           <p class="mt-2 text-gray-500">Daftar untuk membuat akun anda</p>
         </div>
         <div class="mt-5">
@@ -25,16 +30,16 @@
             <div class="relative mt-6">
               <input
                 type="text"
-                name="Frist-Name"
+                name="First-Name"
                 id="first-name"
-                placeholder="Frist-Name"
+                placeholder="First-Name"
                 class="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
                 required
               />
               <label
                 for="first-name"
                 class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
-                >Frist Name</label
+                >Nama Depan</label
               >
             </div>
 
@@ -51,7 +56,7 @@
               <label
                 for="last-name"
                 class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
-                >Last Name</label
+                >Nama Belakang</label
               >
             </div>
 
@@ -60,7 +65,7 @@
               <input
                 type="email"
                 name="email"
-                id="emaile"
+                id="email"
                 placeholder="email"
                 class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
                 required
@@ -95,38 +100,54 @@
                 type="submit"
                 class="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
               >
-                Sign Up
+                DAFTAR
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+      const loadHeader = async () => {
+
+        const headerPage = document.getElementById('header-page')
+        try{
+            let headerResponse = await fetch('../components/header.html')
+            let headerHTML = await headerResponse.text()
+            headerPage.innerHTML = headerHTML
+        }catch(error){
+            console.error("Message ===> ", error)
+        }
+    }
+
       document
         .getElementById("LoginForm")
         .addEventListener("submit", (event) => {
           event.preventDefault();
 
           // data dari form
-          const firstName = document.getElementsByName("First-Name")[0].value;
-          const lastName = document.getElementsByName("Last-Name")[0].value;
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
+          let firstName = document.getElementById("first-name").value;
+          let lastName = document.getElementById("last-name").value;
+          let email = document.getElementById("email").value;
+          let password = document.getElementById("password").value;
+          let hashedPassword = CryptoJS.MD5(password.value).toString()
 
           // data buat beckend
           const dataBuatBeckend = {
-            firstName: firstName,
-            lastName: lastName,
+
             email: email,
-            password: password,
-          };
+            hashed_password: hashedPassword,
+            first_name: firstName,
+            last_name: lastName
+          };  
+
+          
           // kirim data ke beckend
-          axios.post("", dataBuatBeckend).then((response) => {
+          axios.post("http://localhost:3002/register", dataBuatBeckend).then((response) => {
             if (response.data.status === "success") {
               alert("Registrasi Berhasil");
-              window.location.href = "index.html";
+              window.location.href = "../index.html";
             } else {
               alert(
                 `Registrasi Gagal: ${
@@ -136,6 +157,8 @@
             }
           });
         });
+        
+        window.onload = loadHeader;
     </script>
   </body>
 </html>
