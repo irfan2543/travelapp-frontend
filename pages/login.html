@@ -4,16 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/output.css" />
-    <title>LOGIN</title>
+    <title>Aerotria Register</title>
   </head>
   <body
-    class="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
+    class="flex flex-col  min-h-screen bg-cover bg-center bg-no-repeat relative"
   >
-    <!-- background image -->
+      <!-- Header Page -->
+      <div id="header-page" class="bg-gray-500 w-full ">
 
+      </div>
     <!-- tabel form -->
     <div
-      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10"
+      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10 mt-20"
     >
       <!-- teks login -->
       <div class="w-full">
@@ -77,7 +79,7 @@
                 type="submit"
                 class="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
               >
-                Sign in
+                Masuk
               </button>
             </div>
 
@@ -85,7 +87,7 @@
             <p class="text-center text-sm text-gray-500">
               Anda tidak memiliki akun?
               <a
-                href="register.html"
+                href="./register.html"
                 class="font-semibold text-gray-600 hover:underline focus:text-gray-800 focus:outline-none"
               >
                 Daftar
@@ -95,11 +97,22 @@
         </div>
       </div>
     </div>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+      const loadHeader = async () => {
+
+        const headerPage = document.getElementById('header-page')
+        try{
+            let headerResponse = await fetch('../components/header.html')
+            let headerHTML = await headerResponse.text()
+            headerPage.innerHTML = headerHTML
+        }catch(error){
+            console.error("Message ===> ", error)
+        }
+    }
       document
         .getElementById("LoginForm")
-        .addEventListener("submit", (event) => {
+        .addEventListener("submit", async (event) => {
           event.preventDefault();
 
           // data dari form
@@ -109,21 +122,27 @@
           // data buat Beckend
           const dataBuatBeckend = {
             email: email,
-            password: password,
+            hashed_password: password,
           };
-
+        
           // kirim data ke beckend
-          axios.post("", dataBuatBeckend).then((response) => {
-            if (condition) {
-              alert("Login Berhasil");
-              window.location.href = "index.html";
-            } else {
-              alert(
-                `Login Gagal ${response.data.message || "Terjadi Kesalahan"} `
-              );
+          const response = await axios.post("http://localhost:3002/login", dataBuatBeckend)
+
+          if(response.status === 200){
+
+            let dataSession = {
+              userId : response.data.userId,
+              email : response.data.email,
+              fullname : `${response.data.firstName} ${response.data.lastname}`
             }
+
+            let sessionLoginUser = localStorage.setItem('UserLogin', JSON.stringify(dataSession))
+            window.location.href = "../index.html"
+          }else{
+            alert("Email Atau Password Salah")
+          }
           });
-        });
+          window.onload = loadHeader;
     </script>
   </body>
 </html>

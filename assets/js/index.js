@@ -1,17 +1,19 @@
 const apiKeyWeather = '79bd65514dea072ce5a3b6d95da22e79';
-let weatherData = []
-let weatherDiv = document.getElementById('weatherData')
-let mostPlaceIndonesia = document.getElementById('mostPlace')
-let flightRouteBtn = document.getElementById('flightRoute-btn')
+let weatherData = [];
+let weatherDiv = document.getElementById('weatherData');
+let mostPlaceIndonesia = document.getElementById('mostPlace');
+let routeDeparture = document.getElementById('routeDeparture')
+let routeArrival = document.getElementById('routeArrival')
+let dateDeparture = document.getElementById('date-picker')
+let dataArray = []
 
 const fetchCities = () =>{
 
-    axios.get('http://localhost:3002/city')
+    axios.get('http://localhost:3002/cities')
     .then((response) =>
         dataCities(response.data)
     )
 }
-
 
 const loadFooter = async () => {
 
@@ -21,7 +23,7 @@ const loadFooter = async () => {
         let footerHTML = await footerResponse.text()
         footerPage.innerHTML = footerHTML
     }catch(error){
-        console.error("Footer Tidak Terload !", error)
+        console.error("Message ===> ", error)
     }
 }
 
@@ -98,7 +100,7 @@ const weatherDataMap = async () =>{
             }, 500);
         }
     }catch(error){
-        console.error(error)
+        console.error("Message ===> ", error)
     }
 }
 
@@ -149,53 +151,102 @@ const placeVisit = () =>{
             }, 1000);
         })
     }catch(error) {
-        console.error(error)
+        console.error("Message ===> ", error)
     }
 }
 
-// const userFeature = () =>{
+const userFeature = () =>{
 
-//     let checkUser = localStorage.getItem()
-    
-//     try{
-//         if()
-//     }catch(error){
-//         console.error("message ===> ", error)
-//     }
 
-// }
+    try{
+        let checkUser = localStorage.getItem("UserLogin")
+        let userDiv = document.createElement('div')
+        let userAuth = document.getElementById('userAuth')
+
+
+        let getUser = localStorage.getItem("UserLogin")
+        let jsonUser = JSON.parse(getUser)
+
+        if(checkUser == null){
+            userDiv.innerHTML = 
+            `
+            <div class="flex-1 flex flex-col items-center justify-center space-y-10">
+                <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-8" onclick="signUpBtn()">MENDAFTAR</button></div>
+                <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-8" onclick="signInBtn()">MASUK</button></div>
+            </div>
+            `
+           
+            userAuth.appendChild(userDiv)
+        }else{
+            userDiv.innerHTML = 
+            `
+            <div class="flex-1 flex flex-col items-center justify-center space-y-10">
+                <div  class="text-xl text-white font-semibold"><p>${jsonUser.fullname}</p></div>
+                <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-8" onclick="historyPurchaseBtn()">RIWAYAT PEMBELIAN</button></div>
+                <div class="bg-gray-300 w-6/12 h-1/5 bg-opacity-50 tracking-widest text-white spa font-bold hover:bg-yellow-200 hover:bg-opacity-50 transition delay-100 hover:scale-125"><button class="w-full h-8" onclick="logoutBtn()">KELUAR</button></div>
+            </div>
+            `
+            userAuth.appendChild(userDiv)
+        }
+    }catch(error){
+        console.error("Message ===> ", error)
+    }
+
+}
 
 const dataCities = (data) =>{
-
-    let routeDeparture = document.getElementById('routeDeparture')
-    let routeArrival = document.getElementById('routeArrival')
-
-    console.log(data)
 
     try{
         
     routeDeparture.innerHTML = data.map((response) =>`
-        <option value="${response.id}">${response.alias_kota} - ${response.kota}</option>
+        <option value="${response.id}">${response.alias_city} - ${response.airport_city}</option>
         `
     )
 
     routeArrival.innerHTML = data.map((response) =>` 
-        <option value="${response.id}">${response.alias_kota} - ${response.kota}</option>
+        <option value="${response.id}">${response.alias_city} - ${response.airport_city}</option>
         `
     )
+
     }catch(error) {
-        console.error("Message => ", error)
+        console.error("Message ===> ", error)
     }
 
 }
 
-let signInBtn = document.getElementById('signIn-btn').addEventListener('click', () =>{
-    window.location.href = './pages/login.html'
-})
+const signInBtn = () => {
+ 
+    try {
+        window.location.href = './pages/login.html'
+        
+    }catch(error) {
+        console.error("Message", error)
+    }
+}
 
-let signUpBtn = document.getElementById('signUp-btn').addEventListener('click', () =>{
-    window.location.href = './pages/register.html'
-})
+const signUpBtn = () => {
+    try {
+       window.location.href = './pages/register.html'
+    }catch(error) {
+        console.error("Message ===> ", error)
+    }
+
+}
+
+const logoutBtn = () => {
+    
+    try{
+        localStorage.removeItem("UserLogin")
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000);
+    }catch(error){
+        console.error("Message ===> ", error)
+    }
+
+    
+}
+
 
 const datePicker = () =>{
 
@@ -219,8 +270,60 @@ const datePicker = () =>{
     calendarDaysContainer.className = `${calendarDaysContainer.className} [&_span.flatpickr-day]:!rounded-md [&_span.flatpickr-day.selected]:!bg-gray-900 [&_span.flatpickr-day.selected]:!border-gray-900`;
 }
 
+const historyPurchaseBtn = () => {
+    try{
+        window.location.href = './pages/history.html'
+    }catch(error){
+        console.error("Message ===> ", error)
+    }
+}
+
+document.getElementById('flightRoute-btn').addEventListener('click', async (e) => {
+    e.preventDefault()
+    try{
+
+
+        if(parseInt(routeDeparture.value) === parseInt(routeArrival.value)){
+            Swal.fire({
+                title : 'error',
+                text: 'Tidak Bisa Memilih Kota Yang Sama',
+                icon : 'error'
+            })
+        }
+        else{
+            dataAirline = {
+    
+                "date_departure" : dateDeparture.value,
+                "city_departure" : parseInt(routeDeparture.value),
+                "city_arrival" : parseInt(routeArrival.value)
+            }
+
+            console.log(dataAirline)
+            checkAirline = await axios.post('http://localhost:3002/schedule', dataAirline)
+            if(checkAirline.status === 201){
+
+                let queryData = encodeURIComponent(JSON.stringify(dataAirline))
+                setTimeout(() => {
+                    window.location.href = `./pages/booking-airline.html?data=${queryData}`;
+                }, 2000);
+
+                
+            }else{
+                console.log("Maskapai Tidak Tersedia")
+            }
+        }
+    }catch(error){
+        console.error("Message ===> ", error)
+    }
+})
+
+
 fetchCities()
+userFeature()
 datePicker()
 placeVisit()
 weatherDataMap()
 window.onload = loadFooter;
+
+//Initizialitation AOS Animation
+AOS.init()
