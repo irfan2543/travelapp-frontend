@@ -2,9 +2,10 @@ let filterDiv = document.querySelectorAll('.filterrDiv')
 let airlineDiv = document.querySelectorAll('.airlineDiv')
 let baggageFirst = document.getElementById('baggageFirst')
 let baggageSecond = document.getElementById('baggageSecond')
-let statee = 0;
 let filterAirline = []
-
+let stateeButton = 0;
+let flightId = 0
+let statee = 0;
 
 const loadHeader = async () => {
 
@@ -40,7 +41,7 @@ const flightAirline = async () => {
 }
 
 const renderAirline = (filterCompany) => {
-    console.log(filterCompany)
+   
     let dataAirlineDiv = document.getElementById('dataAirlineDiv')
     dataAirlineDiv.innerHTML = ""
     dataAirlineDiv.innerHTML = filterCompany.map((dataAirline) =>  {
@@ -76,7 +77,7 @@ const renderAirline = (filterCompany) => {
         }else if(dataAirline.id_maskapai === 5){
             imgAirline = `<img src="../assets/img/airline_logo/batikair_logo.png" alt="${dataAirline.nama_maskapai}" width="100px">`
         }
-        
+   
         return(`
             <div class="airlineDiv my-10 w-11/12 bg-[#8b8a8a6c] rounded-xl">
                 <div class="flex flex-col space-y-10 space-x-2">
@@ -115,22 +116,145 @@ const renderAirline = (filterCompany) => {
                         </div>
                         <div class="flex-1 flex items-end justify-end">
                             <button class="border rounded-xl bg-yellow-300 w-24 h-7 hover:scale-105 mr-3" 
-                            onclick="updateBooking(${dataAirline.id})">Update</button>
-                        </div>
-                        <div class="flex-1 flex items-end justify-end">
-                            <button class="border rounded-xl bg-yellow-300 w-24 h-7 hover:scale-105 mr-3" 
-                            onclick="deleteBooking(${dataAirline.id}, ${dataAirline.is_cabin}, ${dataAirline.baggage})">Delete</button>
-                        </div>             
+                            onclick="handleUpdate('${JSON.stringify(dataAirline).replace(/"/g, '&quot;')}')">Update</button>
+                        </div>      
                     </div>
                 </div>
             </div>
         `
         )
     }).join('')
+}
+
+const updateBooking = () => {
+
+    try{
+        id_airline = document.getElementById('id_airline').value
+        let date_departure = document.getElementById('date_departure').value
+        let date_arrival = document.getElementById('date_arrival').value
+
+        let city_departure = document.getElementById('city_from').value
+        let city_arrival = document.getElementById('city_to').value
+
+        if(city_departure === city_arrival){
+            Swal.fire({
+                title: "Gagal Mengubah",
+                text: "Tidak Bisa Memilih Penerbangan Yang Sama",
+                icon: "error"
+              })
+              setTimeout(() => {
+                window.location.reload()
+              }, 2000);
+        }else{
+            let dateDepartureFinal = moment(date_departure).format("yyyy-MM-DD HH:mm:ss")
+            let dateArrivalFinal = moment(date_arrival).format("yyyy-MM-DD HH:mm:ss")
+            let updateFlight = {
+                
+               "id_maskapai" : document.getElementById('airlineCompany').value, 
+               "date_departure" : dateDepartureFinal,
+               "date_arrival" : dateArrivalFinal,
+               "city_departure" : city_departure,
+               "city_arrival" : city_arrival,
+               "price" : document.getElementById('priceFlight').value,
+               "baggage" : parseInt(document.getElementById('baggage').value),
+               "is_cabin" : document.getElementById('isCabin').value,
+            }
+           
+            axios.put(`http://localhost:3002/schedule/${id_airline}`, updateFlight)
+            .then((results) => {
+                Swal.fire({
+                    title: "Success",
+                    text: "Penerbangan Berhasil Diubah",
+                    icon: "success"
+                  })
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000);
+            }).catch((err) =>{
+                console.error(err)
+            })
+        }  
+    }catch(err){
+        console.error(err)
+    }
 
 }
 
+const handleSubmit = () => {
+    if(stateeButton == 0){
+        makeFlight()
+    }else{
+        updateBooking()
+    }
+}
 
+const makeFlight = () => {
+
+    let date_departure = document.getElementById('date_departure').value
+    let date_arrival = document.getElementById('date_arrival').value
+
+    let dateDepartureFinal = moment(date_departure).format("yyyy-MM-DD HH:mm:ss")
+    let dateArrivalFinal = moment(date_arrival).format("yyyy-MM-DD HH:mm:ss")
+
+    let newFlight = {
+                
+        "id_maskapai" : document.getElementById('airlineCompany').value, 
+        "date_departure" : dateDepartureFinal,
+        "date_arrival" : dateArrivalFinal,
+        "city_departure" : document.getElementById('city_from').value,
+        "city_arrival" : document.getElementById('city_to').value,
+        "price" : document.getElementById('priceFlight').value,
+        "baggage" : parseInt(document.getElementById('baggage').value),
+        "is_cabin" : document.getElementById('isCabin').value,
+     }
+
+     console.log(newFlight)
+
+     axios.post('http://localhost:3002/flights', newFlight)
+     .then((results) => {
+        Swal.fire({
+            title: "Penerbangan",
+            text: "Penerbangan Telah Dibuat",
+            icon: "Success"
+          })
+          setTimeout(() => {
+            window.location.reload()
+          }, 2000);
+
+     }).catch((err) => {
+        console.error(err)
+        
+     })
+}
+
+const handleUpdate = (dataAirline) => {
+
+    let jsonAirline = JSON.parse(dataAirline)
+    date_departure = moment(jsonAirline.date_departure).local()
+    date_arrival = moment(jsonAirline.date_arrival).local()
+
+    if(stateeButton == 0){
+        stateeButton = 1
+        document.getElementById('btn-process').innerHTML = "Update"
+        
+        if(jsonAirline !== null) {
+
+            flightId = dataAirline.id
+            document.getElementById('id_airline').value = jsonAirline.id
+            document.getElementById('airlineCompany').value = jsonAirline.id_maskapai
+            document.getElementById('date_departure').value = date_departure.format('yyyy-MM-DD HH:mm');
+            document.getElementById('date_arrival').value = date_arrival.format('yyyy-MM-DD HH:mm');
+            document.getElementById('city_from').value = jsonAirline.city_departure
+            document.getElementById('city_to').value = jsonAirline.city_arrival
+            document.getElementById('priceFlight').value = jsonAirline.price
+            document.getElementById('baggage').value = jsonAirline.baggage
+            document.getElementById('isCabin').value = jsonAirline.is_cabin
+        }else{
+            stateeButton = 0
+            document.getElementById('btn-process').innerHTML = "Kirim"
+        }
+    }
+}
 
 const filterAllAirline = () => {
 
@@ -151,8 +275,6 @@ const filterAllAirline = () => {
     console.log(filterCompany)
     renderAirline(filterCompany)
 }
-
-
 
 document.querySelectorAll('.baggageCheckbox').forEach(checkbox => {
     checkbox.addEventListener('change', filterAllAirline)

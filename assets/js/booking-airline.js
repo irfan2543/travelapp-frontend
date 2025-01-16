@@ -175,9 +175,9 @@ const renderAirline = (filterCompany) => {
                             ${dataAirline.id}, 
                             ${dataAirline.is_cabin}, 
                             ${dataAirline.baggage}, 
-                            ${dataAirline.city_from}, 
-                            ${dataAirline.city_to}, 
-                            ${dataAirline.price}
+                            '${dataAirline.city_from}', 
+                            '${dataAirline.city_to}', 
+                            ${dataAirline.price})
                             ">Pilih</button>
                         </div>
                     </div>

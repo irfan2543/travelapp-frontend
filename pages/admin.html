@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Admin Aerotria</title>
 </head>
 <body>
@@ -13,8 +14,8 @@
 
         </div>
         <div class="flex flex-row">
-            <div class="flex-1 justify-center grid grid-cols-1 gap-1 h-[35rem]">
-                <div id="filterComponent"  class="bg-[#8b8a8a6c] mt-3 w-9/12 h-80  space-y-5 border rounded-md bg-blue-500 ml-20">
+            <div class="flex-1 justify-center">
+                <div id="filterComponent"  class="bg-[#8b8a8a6c] mt-10  w-9/12 h-fit space-y-5 border rounded-md bg-blue-500 ml-20">
                     <div id="filterBtn" class="flex flex-row cursor-pointer hover:scale-105" >
                         <p class="text-xl font-bold tracking-wider w-full text-start ml-5">Filter : </p>
                     </div>
@@ -56,12 +57,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-yellow-500 w-9/12 ml-20 mt-5 space-y-5 h-[40rem]">
-                    <div class="flex flex-col w-2/4 ml-5 mt-5">
-                        <label for="id_airline">Id Maskapai : </label>
-                        <input type="number" name="id_airline" id="id_airline" readonly>
-                        <label for="airlineCompany">Pilih Maskapai : </label>
-                        <select name="airline" id="airlineCompany">
+                <div class="w-9/12 ml-20 mt-5 space-y-7 pb-5 border rounded-md" style="background-image: url('../assets/img/banner-bg.jpg');">
+                    <div class="flex flex-col w-2/4 ml-5 mt-5 ">
+                        <label for="id_airline" class="text-lg font-semibold text-white font">ID Maskapai : </label>
+                        <input type="number" name="id_airline" id="id_airline" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readonly>
+                        <label for="airlineCompany" class="text-lg font-semibold text-white">Pilih Maskapai : </label>
+                        <select name="airline" id="airlineCompany" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="1">Garuda Indonesia</option>
                             <option value="2">Lion Air</option>
                             <option value="3">Air Asia Indonesia</option>
@@ -70,14 +71,14 @@
                         </select>
                     </div>
                     <div class="flex flex-col w-2/4 ml-5">
-                        <label for="date_departure">Tanggal Keberangkatan : </label>
-                        <input type="datetime-local" name="date_departure" id="date_departure">
-                        <label for="date_arrival">Tanggal Sampai : </label>
-                        <input type="datetime-local" name="date_arrival" id="date_arrival">
+                        <label for="date_departure" class="text-lg font-semibold text-white">Tanggal Keberangkatan : </label>
+                        <input type="datetime-local" name="date_departure" id="date_departure" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="date_arrival" class="text-lg font-semibold text-white">Tanggal Sampai : </label>
+                        <input type="datetime-local" name="date_arrival" id="date_arrival" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div  class="flex flex-col w-2/4 ml-5">
-                        <label for="city_from">Kota Keberangkatan : </label>
-                        <select name="city_from" id="city_from">
+                        <label for="city_from" class="text-lg font-semibold text-white">Kota Keberangkatan : </label>
+                        <select name="city_from" id="city_from" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="1">Surabaya (Juanda)</option>
                             <option value="2">Jakarta (Soekarno-Hatta)</option>
                             <option value="3">Denpasar (Ngurah Rai)</option>
@@ -86,8 +87,8 @@
                             <option value="6">Makasar (Sultan Hasanuddin)</option>
                             <option value="7">Yogyakarta (Yogyakarta International Airport)</option>
                         </select>
-                        <label for="city_to">Kota Tujuan : </label>
-                        <select name="city_to" id="city_to">
+                        <label for="city_to" class="text-lg font-semibold text-white">Kota Tujuan : </label>
+                        <select name="city_to" id="city_to" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="1">Surabaya (Juanda)</option>
                             <option value="2">Jakarta (Soekarno-Hatta)</option>
                             <option value="3">Denpasar (Ngurah Rai)</option>
@@ -98,18 +99,21 @@
                         </select>
                     </div>
                     <div class="flex flex-col w-2/4 ml-5">
-                        <label for="priceFlight">Harga Penerbangan : </label>
-                        <input type="number" name="priceFlight" id="priceFlight">
-                        <label for="baggage">Bagasi Penerbangan : </label>
-                        <input type="number" name="baggage" id="baggage">
-                        <label for="priceFlight">Harga Penerbangan : </label>
-                        <select name="cabin" id="isCabin">
-                            <option value="0">Tidak</option>
+                        <label for="priceFlight" class="text-lg font-semibold text-white">Harga Penerbangan : </label>
+                        <input type="number" name="priceFlight" id="priceFlight" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="baggage" class="text-lg font-semibold text-white">Bagasi Penerbangan : </label>
+                        <select name="baggage" id="baggage" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="20">20 Kg</option>
+                            <option value="10">10 Kg</option>
+                        </select>
+                        <label for="priceFlight" class="text-lg font-semibold text-white">Apakah Kabin Tersedia ?</label>
+                        <select name="cabin" id="isCabin" class="ml-5 mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="1">Ya</option>
+                            <option value="0">Tidak</option>
                         </select>
                     </div>
-                    <div>
-                        <button>Update</button>
+                    <div class="flex items-center justify-center">
+                        <button id="btn-process" onclick="handleSubmit()"  class="border rounded-xl bg-yellow-300 w-24 h-10 hover:scale-105 mr-3">Kirim</button>
                     </div>
                 </div>
             </div>
@@ -118,6 +122,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../assets/js/admin.js"></script>
 </body>
