@@ -4,41 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../assets/css/output.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
+      integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Aerotria Register</title>
   </head>
   <body
-    class="flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat relative"
+    class="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
+    style="
+      background-image: url('https://wallpapers.com/images/high/4k-plane-taking-off-pr0e0lwl3pshaszh.webp');
+    "
   >
-   <!-- Header Page -->
-  <div id="header-page" class="bg-gray-500 w-full ">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
 
-  </div>
+    <!-- Header Page -->
+    <div
+      id="header-page"
+      class="absolute top-0 left-0 m-4 flex items-center"
+    ></div>
     <!-- tabel form -->
     <div
-      class="relative mx-auto w-full max-w-md bg-blue-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10 mt-20"
+      class="relative mx-auto w-full max-w-md bg-white bg-opacity-10 backdrop-blur-[4px] pt-10 pb-8 shadow-x4 ring-gray-900/5 sm:rounded-xl sm:px-10 mt-20"
     >
       <!-- teks login -->
       <div class="w-full">
         <div class="text-center">
           <h1 class="text-3xl font-semibold text-gray-900">PENDAFTARAN</h1>
-          <p class="mt-2 text-gray-500">Daftar untuk membuat akun anda</p>
+          <p class="mt-2 text-white">Daftar untuk membuat akun anda</p>
         </div>
         <div class="mt-5">
-          <form action="" id="LoginForm">
+          <form action="" id="regisForm">
             <!-- first name -->
-            <div class="relative mt-6">
+            <div class="flex items-center relative mt-6">
               <input
                 type="text"
                 name="First-Name"
                 id="first-name"
-                placeholder="First-Name"
-                class="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                placeholder=""
+                class="peer mt-1 w-full border-b-2 border-gray-800 bg-transparent focus:border-gray-500 focus:outline-none"
                 required
               />
               <label
                 for="first-name"
-                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-900"
                 >Nama Depan</label
               >
             </div>
@@ -49,13 +61,13 @@
                 type="text"
                 name="Last-name"
                 id="last-name"
-                placeholder="last-name"
-                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                placeholder=""
+                class="peer peer mt-1 w-full border-b-2 border-gray-800 bg-transparent focus:border-gray-500 focus:outline-none"
                 required
               />
               <label
                 for="last-name"
-                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
                 >Nama Belakang</label
               >
             </div>
@@ -66,13 +78,13 @@
                 type="email"
                 name="email"
                 id="email"
-                placeholder="email"
-                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                placeholder=""
+                class="peer peer mt-1 w-full border-b-2 border-gray-800 bg-transparent focus:border-gray-500 focus:outline-none"
                 required
               />
               <label
                 for="email"
-                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
                 >Email</label
               >
             </div>
@@ -83,13 +95,13 @@
                 type="password"
                 name="password"
                 id="password"
-                placeholder="password"
-                class="peer peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+                placeholder=""
+                class="peer peer mt-1 w-full border-b-2 border-gray-800 bg-transparent focus:border-gray-500 focus:outline-none"
                 required
               />
               <label
                 for="password"
-                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
+                class="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-white peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-gray-800"
                 >Password</label
               >
             </div>
@@ -110,19 +122,18 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       const loadHeader = async () => {
-
-        const headerPage = document.getElementById('header-page')
-        try{
-            let headerResponse = await fetch('../components/header.html')
-            let headerHTML = await headerResponse.text()
-            headerPage.innerHTML = headerHTML
-        }catch(error){
-            console.error("Message ===> ", error)
+        const headerPage = document.getElementById("header-page");
+        try {
+          let headerResponse = await fetch("../components/header.html");
+          let headerHTML = await headerResponse.text();
+          headerPage.innerHTML = headerHTML;
+        } catch (error) {
+          console.error("Message ===> ", error);
         }
-    }
+      };
 
       document
-        .getElementById("LoginForm")
+        .getElementById("regisForm")
         .addEventListener("submit", (event) => {
           event.preventDefault();
 
@@ -131,34 +142,39 @@
           let lastName = document.getElementById("last-name").value;
           let email = document.getElementById("email").value;
           let password = document.getElementById("password").value;
-          let hashedPassword = CryptoJS.MD5(password.value).toString()
+          let hashedPassword = CryptoJS.MD5(password.value).toString();
 
           // data buat beckend
           const dataBuatBeckend = {
-
             email: email,
             hashed_password: hashedPassword,
             first_name: firstName,
-            last_name: lastName
-          };  
+            last_name: lastName,
+          };
 
-          
           // kirim data ke beckend
-          axios.post("http://localhost:3002/register", dataBuatBeckend).then((response) => {
-            if (response.data.status === "success") {
-              alert("Registrasi Berhasil");
-              window.location.href = "../index.html";
-            } else {
-              alert(
-                `Registrasi Gagal: ${
-                  response.data.message || "Coba Lagi Nanti"
-                }`
-              );
-            }
-          });
+          axios
+            .post("http://localhost:3002/register", dataBuatBeckend)
+            .then((response) => {
+              if (response.data.success) {
+                Swal.fire({
+                  title: "Berhasil!",
+                  text: "Silahkan klik OK!",
+                  icon: "success",
+                }).then(() => {
+                  window.location.href = "../index.html";
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: "Rgistrasi Gagal..",
+                  text: response.data.message || "Coba Lagi Nanti!",
+                });
+              }
+            });
         });
-        
-        window.onload = loadHeader;
+
+      window.onload = loadHeader;
     </script>
   </body>
 </html>
