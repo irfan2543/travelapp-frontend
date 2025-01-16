@@ -1,6 +1,3 @@
-let urlParams = new URLSearchParams(window.location.search)
-let getAirline = JSON.parse(decodeURIComponent(urlParams.get('data')))
-
 let filterDiv = document.querySelectorAll('.filterrDiv')
 let airlineDiv = document.querySelectorAll('.airlineDiv')
 let baggageFirst = document.getElementById('baggageFirst')
@@ -8,39 +5,6 @@ let baggageSecond = document.getElementById('baggageSecond')
 let statee = 0;
 let filterAirline = []
 
-
-// const checkLoginUser = async () => {
-//     let getUser = localStorage.getItem("UserLogin")
-//     let jsonUser = JSON.parse(getUser)
-//     try{
-//         if(getUser == null){
-//             window.location.href = 'index.html'
-            
-//         }else{
-//             let checkEmail = {
-//                 id: jsonUser.userId,
-//                 email : jsonUser.email
-//             }
-//             let response = await axios.post("http://localhost:3002/checkUser", checkEmail)
-//                 .then((dataUser) => {
-//                     // Jika respons berhasil
-//                     console.log("Response:", dataUser.data);
-//                 }).catch((err) => {
-//                     if(err.response){
-//                         if(err.response.status === 400){
-//                             Swal.fire("Login Dulu Bro!");
-//                             localStorage.removeItem("UserLogin")
-//                             setTimeout(() => {
-//                                  window.location.href = '../index.html'
-//                             }, 1000);
-//                         }
-//                     }
-//                 })
-//         }
-//     }catch(err){
-//         console.error(err)
-//     }
-// }
 
 const loadHeader = async () => {
 
@@ -65,38 +29,18 @@ const rupiahPrice = (number) => {
 
 const flightAirline = async () => {
 
-    let checkAirline = {
-        date_departure : getAirline.date_departure,
-        city_departure : parseInt(getAirline.city_departure),
-        city_arrival : parseInt(getAirline.city_arrival)
-    }
-    const response = await axios.post('http://localhost:3002/schedule', checkAirline)
-
-    if(response.status === 201){
-        
         axios.get('http://localhost:3002/schedule')
         .then(res => {
-            const resultsAirline = res.data
-
-            filterAirline = resultsAirline.filter(data => {
-                const dataDate = new Date(data.date_departure).toISOString().split('T')[0]
-                return(
-                    dataDate === checkAirline.date_departure && data.city_departure === checkAirline.city_departure && data.city_arrival === checkAirline.city_arrival
-                )
-                }
-            )
+            filterAirline = res.data
            renderAirline(filterAirline)
         })
         .catch(err => {
             console.error(err); 
         })
-    }else{
-        console.log("Maskapai Tidak Tersedia")
-    }
 }
 
 const renderAirline = (filterCompany) => {
-
+    console.log(filterCompany)
     let dataAirlineDiv = document.getElementById('dataAirlineDiv')
     dataAirlineDiv.innerHTML = ""
     dataAirlineDiv.innerHTML = filterCompany.map((dataAirline) =>  {
@@ -132,7 +76,7 @@ const renderAirline = (filterCompany) => {
         }else if(dataAirline.id_maskapai === 5){
             imgAirline = `<img src="../assets/img/airline_logo/batikair_logo.png" alt="${dataAirline.nama_maskapai}" width="100px">`
         }
-
+        
         return(`
             <div class="airlineDiv my-10 w-11/12 bg-[#8b8a8a6c] rounded-xl">
                 <div class="flex flex-col space-y-10 space-x-2">
@@ -171,15 +115,12 @@ const renderAirline = (filterCompany) => {
                         </div>
                         <div class="flex-1 flex items-end justify-end">
                             <button class="border rounded-xl bg-yellow-300 w-24 h-7 hover:scale-105 mr-3" 
-                            onclick="addBooking(
-                            ${dataAirline.id}, 
-                            ${dataAirline.is_cabin}, 
-                            ${dataAirline.baggage}, 
-                            ${dataAirline.city_from}, 
-                            ${dataAirline.city_to}, 
-                            ${dataAirline.price}
-                            ">Pilih</button>
+                            onclick="updateBooking(${dataAirline.id})">Update</button>
                         </div>
+                        <div class="flex-1 flex items-end justify-end">
+                            <button class="border rounded-xl bg-yellow-300 w-24 h-7 hover:scale-105 mr-3" 
+                            onclick="deleteBooking(${dataAirline.id}, ${dataAirline.is_cabin}, ${dataAirline.baggage})">Delete</button>
+                        </div>             
                     </div>
                 </div>
             </div>
@@ -188,6 +129,8 @@ const renderAirline = (filterCompany) => {
     }).join('')
 
 }
+
+
 
 const filterAllAirline = () => {
 
@@ -198,8 +141,6 @@ const filterAllAirline = () => {
 
     let selectCabin = document.getElementById('cabin')?.checked ? parseInt(document.getElementById('cabin').value) : null
 
-    // let selectPrice = Array.from(document.querySelectorAll(''))
-
     let filterCompany = filterAirline.filter(airline => {
         let selectedBaggage =  selectBaggage.length === 0 || selectBaggage.includes(airline.baggage)
         let selectedCabin = selectCabin === null || selectCabin === airline.is_cabin
@@ -207,45 +148,11 @@ const filterAllAirline = () => {
 
        return selectedBaggage && selectedCabin && selectPrice
     })
-
+    console.log(filterCompany)
     renderAirline(filterCompany)
 }
 
-const addBooking = async (id, is_cabin, baggage, city_from, city_to, price) => {
 
-
-    let getUser = localStorage.getItem("UserLogin")
-    let jsonUser = JSON.parse(getUser)
-
-    let dateID = new Date()
-    let ticketID = dateID.getTime()
-
-    let booking = {
-        id : ticketID,
-        flight_id : id,
-        full_name : jsonUser.fullname,
-        city_from : city_from,
-        city_to : city_to,
-        price : price,
-        email : jsonUser.email,
-        baggage : baggage,
-        is_cabin : is_cabin,
-        status : "Process"
-    }
-
-    let BookingAirline = await axios.post('http://localhost:3002/Ticket', booking)
-
-    if(BookingAirline.status === 201){
-        let queryData = encodeURIComponent(JSON.stringify(booking))
-    setTimeout(() => {
-        window.location.href = `./seat.html?dataBooking=${queryData}`;
-    }, 2000);
-    }else{
-        console.log("Data Tidak Tersedia")
-    }
-
-
-}
 
 document.querySelectorAll('.baggageCheckbox').forEach(checkbox => {
     checkbox.addEventListener('change', filterAllAirline)
@@ -276,7 +183,7 @@ document.getElementById('filterBtn').addEventListener('click', (e) => {
     }
 })
 
-// checkLoginUser()
+
 flightAirline()
 window.onload = loadHeader;
 
