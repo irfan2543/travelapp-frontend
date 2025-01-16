@@ -22,6 +22,7 @@
             >  
                 <thead class="text-xs text-white uppercase bg-indigo-600">  
                     <tr>  
+                        <th class="px-6 py-3">id</th>  
                         <th class="px-6 py-3">Nama</th>  
                         <th class="px-6 py-3">Email</th>  
                         <th class="px-6 py-3">Harga</th>  
@@ -33,33 +34,51 @@
         </div>  
     </div>  
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
-    <script>  
-        axios.get("http://localhost:3002/flight_booking")  
-            .then((response) => {  
-                const transactionHistory = response.data;  
-                const statusColors = {  
-                    success: "text-green-600 font-semibold",  
-                    pending: "text-yellow-500 font-semibold",  
-                    failed: "text-red-600 font-semibold",  
-                };  
-  
-                const tableBody = document.getElementById("history-table");  
-                transactionHistory.forEach((tx) => {  
-                    const row = document.createElement("tr");  
-                    row.innerHTML = `  
-                        <td class="px-6 py-4 whitespace-nowrap">${tx.full_name}</td>  
-                        <td class="px-6 py-4 whitespace-nowrap">${tx.email}</td>  
-                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-green-600">${tx.price ? `Rp ${tx.price.toLocaleString()}` : 'N/A'}</td>  
-                        <td class="px-6 py-4 whitespace-nowrap ${statusColors[tx.booking_status]}">${tx.booking_status.charAt(0).toUpperCase() + tx.booking_status.slice(1)}</td>  
-                    `;  
-                    row.className = "hover:bg-indigo-100 transition-all duration-300";  
-                    tableBody.appendChild(row);  
-                });  
-            })  
-            .catch((error) => {  
-                console.error("Error fetching transaction history:", error);  
-                alert("Terjadi kesalahan saat mengambil riwayat transaksi.");  
-            });  
+    <script> 
+        let emailUser = localStorage.getItem("UserLogin")
+        let emailJson = JSON.parse(emailUser)
+
+        let dataUser = {
+            email : emailJson.email
+        }
+
+        console.log(dataUser)
+        axios.post("http://localhost:3002/history", dataUser)
+        .then((response) => {
+            const transactionHistory = response.data.history; // Pastikan untuk mengambil data history dalam response
+            const statusColors = {
+                success: "text-green-600 font-semibold",
+                pending: "text-yellow-500 font-semibold",
+                failed: "text-red-600 font-semibold",
+            };
+    
+            const tableBody = document.getElementById("history-table");
+    
+            // Pastikan bahwa transactionHistory adalah array yang valid
+            transactionHistory.forEach((tx) => {
+                const row = document.createElement("tr");
+    
+                // Format price dengan currency Indonesia
+                const formattedPrice = tx.total_price ? `Rp ${tx.total_price.toLocaleString()}` : 0;
+    
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${tx.id}</td>  <!-- Menampilkan flight_id -->
+                    <td class="px-6 py-4 whitespace-nowrap">${tx.full_name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${tx.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-green-600">${formattedPrice}</td>
+                    <td class="px-6 py-4 whitespace-nowrap ${statusColors[tx.status.toLowerCase()] || ''}">
+                        ${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
+                    </td>
+                `;
+                row.className = "hover:bg-indigo-100 transition-all duration-300";
+                tableBody.appendChild(row);
+            });
+        })
+        .catch((error) => {
+            console.error("Error fetching transaction history:", error);
+            // alert("Terjadi kesalahan saat mengambil riwayat transaksi.");
+        });
+    
     </script>  
 </body>  
 </html>  
