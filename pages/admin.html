@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-row">
             <div class="flex-1 justify-center grid grid-cols-1 gap-1 h-[35rem]">
-                <div id="filterComponent"  class="bg-[#8b8a8a6c] mt-12 w-9/12 h-80  space-y-5 border rounded-md bg-blue-500 ml-20">
+                <div id="filterComponent"  class="bg-[#8b8a8a6c] mt-3 w-9/12 h-80  space-y-5 border rounded-md bg-blue-500 ml-20">
                     <div id="filterBtn" class="flex flex-row cursor-pointer hover:scale-105" >
                         <p class="text-xl font-bold tracking-wider w-full text-start ml-5">Filter : </p>
                     </div>
@@ -56,8 +56,61 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-yellow-500 w-9/12 ml-20">
-                    <p>aa</p>
+                <div class="bg-yellow-500 w-9/12 ml-20 mt-5 space-y-5 h-[40rem]">
+                    <div class="flex flex-col w-2/4 ml-5 mt-5">
+                        <label for="id_airline">Id Maskapai : </label>
+                        <input type="number" name="id_airline" id="id_airline" readonly>
+                        <label for="airlineCompany">Pilih Maskapai : </label>
+                        <select name="airline" id="airlineCompany">
+                            <option value="1">Garuda Indonesia</option>
+                            <option value="2">Lion Air</option>
+                            <option value="3">Air Asia Indonesia</option>
+                            <option value="4">Citilink</option>
+                            <option value="5">Batik Air</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col w-2/4 ml-5">
+                        <label for="date_departure">Tanggal Keberangkatan : </label>
+                        <input type="datetime-local" name="date_departure" id="date_departure">
+                        <label for="date_arrival">Tanggal Sampai : </label>
+                        <input type="datetime-local" name="date_arrival" id="date_arrival">
+                    </div>
+                    <div  class="flex flex-col w-2/4 ml-5">
+                        <label for="city_from">Kota Keberangkatan : </label>
+                        <select name="city_from" id="city_from">
+                            <option value="1">Surabaya (Juanda)</option>
+                            <option value="2">Jakarta (Soekarno-Hatta)</option>
+                            <option value="3">Denpasar (Ngurah Rai)</option>
+                            <option value="4">Balikpapan (Sultan Aji Muhammad Sulaiman Sepinggan</option>
+                            <option value="5">Bandung (Husein Sastranegara)</option>
+                            <option value="6">Makasar (Sultan Hasanuddin)</option>
+                            <option value="7">Yogyakarta (Yogyakarta International Airport)</option>
+                        </select>
+                        <label for="city_to">Kota Tujuan : </label>
+                        <select name="city_to" id="city_to">
+                            <option value="1">Surabaya (Juanda)</option>
+                            <option value="2">Jakarta (Soekarno-Hatta)</option>
+                            <option value="3">Denpasar (Ngurah Rai)</option>
+                            <option value="4">Balikpapan (Sultan Aji Muhammad Sulaiman Sepinggan</option>
+                            <option value="5">Bandung (Husein Sastranegara)</option>
+                            <option value="6">Makasar (Sultan Hasanuddin)</option>
+                            <option value="7">Yogyakarta (Yogyakarta International Airport)</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col w-2/4 ml-5">
+                        <label for="priceFlight">Harga Penerbangan : </label>
+                        <input type="number" name="priceFlight" id="priceFlight">
+                        <label for="baggage">Bagasi Penerbangan : </label>
+                        <input type="number" name="baggage" id="baggage">
+                        <label for="priceFlight">Harga Penerbangan : </label>
+                        <select name="cabin" id="isCabin">
+                            <option value="0">Tidak</option>
+                            <option value="1">Ya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button>Update</button>
+                    </div>
                 </div>
             </div>
             <div id="dataAirlineDiv" class="flex flex-col justify-center items-center flex-1">
