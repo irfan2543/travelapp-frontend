@@ -3,14 +3,11 @@
 <head>  
     <meta charset="UTF-8" />  
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-    <link  
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"  
-      rel="stylesheet"  
-    />  
+    <link rel="stylesheet" href="../assets/css/output.css">
     <title>Riwayat Transaksi</title>  
 </head>  
 <body  
-    class="bg-gradient-to-br from-purple-100 to-indigo-200 min-h-screen flex items-center justify-center"  
+    class="bg-gradient-to-br from-purple-100 to-indigo-200 min-h-screen flex items-center justify-center flex-col"  
 >  
     <div class="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-6xl">  
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">  
@@ -31,10 +28,29 @@
                 </thead>  
                 <tbody id="history-table" class="bg-white divide-y divide-gray-200"></tbody>  
             </table>  
-        </div>  
+        </div>
+        <div class="flex items-center justify-center mt-5">
+            <button id="button-back" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">Kembali</button>
+        </div>
     </div>  
+    <div id="footerPage" class="w-full"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
-    <script> 
+    <script>
+        const loadFooter = async () => {
+
+            const footerPage = document.getElementById('footerPage')
+            try{
+                let footerResponse = await fetch('../components/footer.html')
+                let footerHTML = await footerResponse.text()
+                footerPage.innerHTML = footerHTML
+            }catch(error){
+                console.error("Message ===> ", error)
+            }
+        }
+
+        window.onload = loadFooter;
+
+
         let emailUser = localStorage.getItem("UserLogin")
         let emailJson = JSON.parse(emailUser)
 
@@ -79,6 +95,15 @@
             // alert("Terjadi kesalahan saat mengambil riwayat transaksi.");
         });
     
+
+        document.getElementById('button-back').addEventListener('click', (e) => {
+
+            e.preventDefault()
+
+            setTimeout(()=> {
+                window.location.href = "../index.html"
+            },2000)
+        })
     </script>  
 </body>  
 </html>  
