@@ -217,11 +217,7 @@ const addBooking = async (id, is_cabin, baggage, city_from, city_to, price) => {
     let getUser = localStorage.getItem("UserLogin")
     let jsonUser = JSON.parse(getUser)
 
-    let dateID = new Date()
-    let ticketID = dateID.getTime()
-
     let booking = {
-        id : ticketID,
         flight_id : id,
         full_name : jsonUser.fullname,
         city_from : city_from,
@@ -234,9 +230,22 @@ const addBooking = async (id, is_cabin, baggage, city_from, city_to, price) => {
     }
 
     let BookingAirline = await axios.post('http://localhost:3002/Ticket', booking)
-
+    
     if(BookingAirline.status === 201){
-        let queryData = encodeURIComponent(JSON.stringify(booking))
+
+        let sendBooking = {
+                id : BookingAirline.data.message,
+                flight_id : id,
+                full_name : jsonUser.fullname,
+                city_from : city_from,
+                city_to : city_to,
+                price : price,
+                email : jsonUser.email,
+                baggage : baggage,
+                is_cabin : is_cabin,
+                status : "Process"
+        }
+        let queryData = encodeURIComponent(JSON.stringify(sendBooking))
     setTimeout(() => {
         window.location.href = `./seat.html?dataBooking=${queryData}`;
     }, 2000);
