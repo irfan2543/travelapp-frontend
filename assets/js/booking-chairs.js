@@ -14,6 +14,7 @@ let dataAirline = {
 let seatsChoose = []
 let seatBooking = []
 let seatDiv = document.getElementById("seatDiv");
+let totalPrice = 0
 
 const loadHeader = async () => {
     const headerPage = document.getElementById("header-page");
@@ -137,7 +138,7 @@ const chooseSeats = (dataSeats) => {
     }
 
     let priceDiv = document.getElementById('priceDiv')
-
+    let priceData = parseInt(dataAirline.price)
     let divSeat = event.target.closest(".seat-div");
 
     if (divSeat.classList.contains("bg-blue-500")) {
@@ -147,6 +148,7 @@ const chooseSeats = (dataSeats) => {
         seatBooking = seatBooking.filter(seat => seat.number_seat !== getData.number_seat);
         seatsChoose = seatsChoose.filter(seat => seat.number_seat !== getData.number_seat);
         removeSeatFromBooked(getData.number_seat);
+        seatBooking.pop();
     } else {
 
         if (!seatBooking.some(seat => seat.number_seat === getData.number_seat)) {
@@ -156,12 +158,9 @@ const chooseSeats = (dataSeats) => {
         }
         divSeat.classList.remove("bg-gray-200", "hover:bg-gray-300");
         divSeat.classList.add("bg-blue-500", "hover:bg-blue-600");
-
     }
-    console.log(seatBooking)
-    const totalPrice = seatBooking.reduce((total) => total + dataAirline.price, 0);
-    document.getElementById("priceDiv").value = totalPrice;
-
+        totalPrice = seatBooking.length * dataAirline.price;
+        document.getElementById("priceDiv").value = totalPrice;
 }
 
 const addSeatToDiv = (seat) => {

@@ -6,6 +6,7 @@ let routeDeparture = document.getElementById('routeDeparture')
 let routeArrival = document.getElementById('routeArrival')
 let dateDeparture = document.getElementById('date-picker')
 let dataArray = []
+let checkUser = localStorage.getItem("UserLogin")
 
 const fetchCities = () =>{
 
@@ -159,7 +160,6 @@ const userFeature = () =>{
 
 
     try{
-        let checkUser = localStorage.getItem("UserLogin")
         let userDiv = document.createElement('div')
         let userAuth = document.getElementById('userAuth')
 
@@ -297,19 +297,34 @@ document.getElementById('flightRoute-btn').addEventListener('click', async (e) =
                 "city_departure" : parseInt(routeDeparture.value),
                 "city_arrival" : parseInt(routeArrival.value)
             }
-
-            console.log(dataAirline)
-            checkAirline = await axios.post('http://localhost:3002/schedule', dataAirline)
-            if(checkAirline.status === 201){
-
-                let queryData = encodeURIComponent(JSON.stringify(dataAirline))
-                setTimeout(() => {
-                    window.location.href = `./pages/booking-airline.html?data=${queryData}`;
-                }, 2000);
-
-                
-            }else{
-                console.log("Maskapai Tidak Tersedia")
+            const today = new Date();
+            const formattedToday = today.toISOString().split('T')[0];
+            if(!dateDeparture.value ){
+                Swal.fire({
+                    title : 'error',
+                    text: 'Masukkan Tanggal Terlebih Dahulu',
+                    icon : 'error'
+                })
+            }else if(dateDeparture.value < formattedToday){
+                Swal.fire({
+                    title : 'error',
+                    text: 'Tanggal Telah Lewat',
+                    icon : 'error'
+                })
+            }
+            else{
+                checkAirline = await axios.post('http://localhost:3002/schedule', dataAirline)
+                if(checkAirline.status === 201){
+    
+                    let queryData = encodeURIComponent(JSON.stringify(dataAirline))
+                    setTimeout(() => {
+                        window.location.href = `./pages/booking-airline.html?data=${queryData}`;
+                    }, 2000);
+    
+                    
+                }else{
+                    console.log("Maskapai Tidak Tersedia")
+                }
             }
         }
     }catch(error){
