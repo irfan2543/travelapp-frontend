@@ -142,12 +142,11 @@
           let lastName = document.getElementById("last-name").value;
           let email = document.getElementById("email").value;
           let password = document.getElementById("password").value;
-          let hashedPassword = CryptoJS.MD5(password.value).toString();
 
           // data buat beckend
           const dataBuatBeckend = {
             email: email,
-            hashed_password: hashedPassword,
+            hashed_password: password,
             first_name: firstName,
             last_name: lastName,
           };
@@ -156,7 +155,7 @@
           axios
             .post("http://localhost:3002/register", dataBuatBeckend)
             .then((response) => {
-              if (response.data.success) {
+              if (response.status === 201) {
                 Swal.fire({
                   title: "Berhasil!",
                   text: "Silahkan klik OK!",
@@ -167,7 +166,7 @@
               } else {
                 Swal.fire({
                   icon: "error",
-                  title: "Rgistrasi Gagal..",
+                  title: "Registrasi Gagal..",
                   text: response.data.message || "Coba Lagi Nanti!",
                 });
               }
