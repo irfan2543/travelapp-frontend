@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../assets/css/output.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Detail Transaksi</title>
   </head>
   <body class="bg-gray-100">
@@ -35,13 +36,13 @@
           <div>
             <h2 class="font-semibold text-lg">Metode Pembayaran</h2>
             <select id="payment-method" class="w-full p-2 border rounded-lg">
-              <option>E-Wallet (OVO)</option>
-              <option>Kartu Kredit</option>
-              <option>Transfer Bank</option>
+              <option value="Ovo">E-Wallet (OVO)</option>
+              <option value="Debit">Debit</option>
+              <option value="Cash">Cash</option>
             </select>
           </div>
           <div>
-            <button
+            <button id="confirm-payment"
               class="w-full bg-yellow-300 hover:bg-green-600 text-white font-bold py-2 rounded-lg"
             >
               Konfirmasi Pembayaran
@@ -50,62 +51,75 @@
         </div>
       </div>
     </div>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-      const userName = "Budi Santoso";
-      const userEmail = "budi@example.com";
-      const flightRoute = "Jakarta (CGK) - Bali (DPS)";
-      const flightDate = "12 Januari 2025";
-      const airline = "Garuda Indonesia";
-      const selectedSeats = ["04", "05", "06", "07"];
-      const ticketPrice = 1200000;
-      const taxPrice = 300000;
-      const totalPrice = ticketPrice + taxPrice;
+      let urlParams = new URLSearchParams(window.location.search)
+      let getAirline = JSON.parse(decodeURIComponent(urlParams.get('seatBooking')))
+      console.log(getAirline)
+      let seatChooses = getAirline.flight_seats
+      seatChooses.forEach((data) => {
+        let jsonData = JSON.parse(data)
 
-      document.getElementById("user-name").textContent = `Nama: ${userName}`;
-      document.getElementById("user-email").textContent = `Email: ${userEmail}`;
+        const seatsContainer = document.getElementById("selected-seats");
+        const seatDiv = document.createElement("div");
+          seatDiv.textContent = jsonData.number_seat;
+          seatDiv.className = "p-2 bg-indigo-300 rounded-lg text-center";
+          seatsContainer.appendChild(seatDiv);
+          });
+
+      let pajak = getAirline.price + (getAirline.price * 0.1);
+
+      document.getElementById("user-name").textContent = `Nama: ${getAirline.full_name}`;
+      document.getElementById("user-email").textContent = `Email: ${getAirline.email}`;
       document.getElementById(
         "flight-route"
-      ).textContent = `Rute: ${flightRoute}`;
-      document.getElementById(
-        "flight-date"
-      ).textContent = `Tanggal: ${flightDate}`;
-      document.getElementById("airline").textContent = `Maskapai: ${airline}`;
+      ).textContent = `Rute: ${getAirline.city_from} -> ${getAirline.city_to}`;
       document.getElementById(
         "ticket-price"
-      ).textContent = `Harga Tiket: Rp ${ticketPrice.toLocaleString()}`;
+      ).textContent = `Harga Tiket: Rp ${getAirline.price.toLocaleString()}`;
       document.getElementById(
         "tax-price"
-      ).textContent = `Pajak: Rp ${taxPrice.toLocaleString()}`;
+      ).textContent = `Pajak: 10%`;
       document.getElementById(
         "total-price"
-      ).textContent = `Total: Rp ${totalPrice.toLocaleString()}`;
+      ).textContent = `Total: Rp ${pajak.toLocaleString()}`;
+      document.getElementById('selected-seats')
+      let checkPayment = document.getElementById('payment-method')
 
-      const seatsContainer = document.getElementById("selected-seats");
-      selectedSeats.forEach((seat) => {
-        const seatDiv = document.createElement("div");
-        seatDiv.textContent = seat;
-        seatDiv.className = "p-2 bg-indigo-300 rounded-lg text-center";
-        seatsContainer.appendChild(seatDiv);
-      });
-      let timeLeft = 600;
-      const countdownElement = document.getElementById("countdown");
+      document.getElementById('confirm-payment').addEventListener('click', (e) => {
+        e.preventDefault()
 
-      function updateCountdown() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        countdownElement.textContent = `${minutes
-          .toString()
-          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-        if (timeLeft === 0) {
-          alert("Waktu pembayaran habis! Halaman akan direset.");
-          window.location.reload();
-        } else {
-          timeLeft--;
+        let userData = {
+          id : getAirline.id,
+          flight_id : getAirline.flight_id,
+          full_name : getAirline.full_name,
+          email : getAirline.email,
+          baggage : getAirline.baggage,
+          is_cabin : getAirline.is_cabin,
+          status : "Success",
+          total_price : pajak,
+          payment : checkPayment.value
+          
         }
-      }
-      setInterval(updateCountdown, 1000);
+
+        console.log(userData)
+
+        axios.put(`http://localhost:3002/payment/${getAirline.id}`,userData)
+        .then(res => {
+          console.log(res)
+          Swal.fire({
+            title: "Berhasil",
+            text: "Kamu Berhasil Membayar",
+            icon: "success"
+          });
+          setTimeout(() => {
+            window.location.href = `../index.html`
+        }, 2000);
+        })
+        .catch(err => {
+          console.error(err); 
+        })
+      })  
     </script>
   </body>
 </html>
