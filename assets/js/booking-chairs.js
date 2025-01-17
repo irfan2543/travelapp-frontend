@@ -66,9 +66,9 @@ const seatDisplay = (data) => {
 
 document.getElementById('button-back').addEventListener('click', (e) => {
     e.preventDefault()
-
+    
     setTimeout(() => {
-        window.location.href = "./booking-airline.html"
+        window.location.href =  `../index.html`
     }, 2000);
 })
 

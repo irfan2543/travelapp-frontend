@@ -7,7 +7,9 @@
     <title>Aerotria Maskapai</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
-<body>
+<body class="min-h-screen bg-cover bg-center bg-no-repeat relative" style="
+background-image: url('https://plus.unsplash.com/premium_photo-1661501562127-a8bb26defb35?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+">
       
     <div class="flex flex-col">
         <!-- Header Page -->
@@ -15,8 +17,8 @@
 
         </div>
         <div class="flex flex-row ">
-            <div  class="flex-1 flex justify-center">
-                <div id="filterComponent"  class="bg-[#8b8a8a6c] mt-12 w-9/12 h-80 space-y-5 border rounded-md">
+            <div  class="flex-1 flex justify-center text-white">
+                <div id="filterComponent"  class="bg-[#E0F7FA] bg-opacity-40 mt-12 w-9/12 h-80 space-y-5 border rounded-md">
                     <div id="filterBtn" class="flex flex-row cursor-pointer hover:scale-105" >
                         <p class="text-xl font-bold tracking-wider w-full text-start ml-5">Filter : </p>
                     </div>
@@ -27,13 +29,13 @@
                         </div>
                         <div class="flex flex-row space-x-5 mt-5">
                             <div>
-                                <input type="number" name="firstPrice" class="priceAirline bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="firstPrice" placeholder="Harga Terendah">
+                                <input type="text" name="firstPrice" class="priceAirline bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="firstPrice" placeholder="Harga Terendah">
                             </div>
                             <div class="flex justify-center items-center">
                                 <p>Ke</p>
                             </div>
                             <div>
-                                <input type="number" name="secondPrice" class="priceAirline bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="secondPrice" placeholder="Harga Tertinggi">
+                                <input type="text" name="secondPrice" class="priceAirline bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="secondPrice" placeholder="Harga Tertinggi">
                             </div>
                         </div>
                     </div>
