@@ -5,8 +5,11 @@ let filterDiv = document.querySelectorAll('.filterrDiv')
 let airlineDiv = document.querySelectorAll('.airlineDiv')
 let baggageFirst = document.getElementById('baggageFirst')
 let baggageSecond = document.getElementById('baggageSecond')
+let minPrice = document.getElementById('firstPrice')
+let maxPrice = document.getElementById('secondPrice')
 let statee = 0;
 let filterAirline = []
+
 
 
 // const checkLoginUser = async () => {
@@ -63,6 +66,15 @@ const rupiahPrice = (number) => {
     }).format(number)
 }
 
+const rupiahNumber = (number) => {
+    return new Intl.NumberFormat('id-ID').format(number)
+}
+
+const realNumber = (number) => {
+    let deleteString = number.replace(/[^\d]/g, ''); 
+    return parseInt(deleteString, 10); 
+}
+
 const flightAirline = async () => {
 
     let checkAirline = {
@@ -95,11 +107,12 @@ const flightAirline = async () => {
     }
 }
 
-const renderAirline = (filterCompany) => {
+const renderAirline = async (filterCompany) => {
 
     let dataAirlineDiv = document.getElementById('dataAirlineDiv')
     dataAirlineDiv.innerHTML = ""
-    dataAirlineDiv.innerHTML = filterCompany.map((dataAirline) =>  {
+
+    for(let dataAirline of filterCompany ) {
        
         let dataDate = new Date(dataAirline.date_departure).toISOString().split('T')[0]
         let getDay = new Date(dataAirline.date_departure).getDate();
@@ -132,67 +145,72 @@ const renderAirline = (filterCompany) => {
         }else if(dataAirline.id_maskapai === 5){
             imgAirline = `<img src="../assets/img/airline_logo/batikair_logo.png" alt="${dataAirline.nama_maskapai}" width="100px">`
         }
+        
+        try{
+            let response = await axios.get(`http://localhost:3002/check-seats/${dataAirline.id}`)
+            let results = response.data
+           
+            let buttonChoose = ""
 
-        return(`
-            <div class="airlineDiv my-10 w-11/12 bg-[#8b8a8a6c] rounded-xl">
-                <div class="flex flex-col space-y-10 space-x-2">
-                    <div class="flex flex-row tracking-wider mt-3">
-                        <div class="basis-1/4">
-                        ${imgAirline}
-                        </div>
-                        <div class="basis-2/4 flex flex-row font-semibold">
-                            <div class="flex flex-col justify-center items-center basis-1/4 text-sm">
-                                <p>${dataTimeDeparture}</p>
-                                <p>${dataAirline.city_from}</p>
+            if(results.fully_booked == true){
+                buttonChoose = `<button class="invisible"></button>`
+            }else{
+                buttonChoose = `<button class="border rounded-xl w-24 h-7 hover:scale-105 mr-3 bg-yellow-300">Pilih</button>`
+            }
+           
+            dataAirlineDiv.innerHTML += `
+                <div class="airlineDiv my-10 w-11/12 bg-[#E0F7FA] rounded-xl">
+                    <div class="flex flex-col space-y-10 space-x-2">
+                        <div class="flex flex-row tracking-wider mt-3">
+                            <div class="basis-1/4">
+                            ${imgAirline}
                             </div>
-                            <div class="basis-2/4 flex flex-col items-center justify-center text-xs">
-                                <p>${minutesDifference} Menit</p>
-                                <img src="../assets/img/airline_linelogo.png" alt="Airline Line" class="w-full h-5">
+                            <div class="basis-2/4 flex flex-row font-semibold">
+                                <div class="flex flex-col justify-center items-center basis-1/4 text-sm">
+                                    <p>${dataTimeDeparture}</p>
+                                    <p>${dataAirline.city_from}</p>
+                                </div>
+                                <div class="basis-2/4 flex flex-col items-center justify-center text-xs">
+                                    <p>${minutesDifference} Menit</p>
+                                    <img src="../assets/img/airline_linelogo.png" alt="Airline Line" class="w-full h-5">
+                                </div>
+                                <div class="flex flex-col justify-center items-center basis-1/4 text-sm text-sp">
+                                    <p>${dataTimeArrival}</p>
+                                    <p>${dataAirline.city_to}</p>
+                                </div>
                             </div>
-                            <div class="flex flex-col justify-center items-center basis-1/4 text-sm text-sp">
-                                <p>${dataTimeArrival}</p>
-                                <p>${dataAirline.city_to}</p>
-                            </div>
-                        </div>
-                        <div class="basis-1/4 flex flex-col justify-center items-center">
-                            ${rupiahPrice(dataAirline.price)}
-                        </div>
-                    </div>
-                    <div class="flex flex-row text-sm pb-2">
-                        <div class="flex-1 flex flex-row">
-                            <div class="flex flex-row items-center justify-center">
-                                <p>${getDay} ${getMonth} ${getYear}</p>
-                            </div>
-                            <div class="flex flex-row items-center justify-center ml-7">
-                                <img src="../assets/img/baggage.png" alt="Baggage" class="w-8 h-5">
-                                <p class="text-[12px]">${dataAirline.baggage}</p>
-                                <div class="ml-7">${cabinAirline}</div>
+                            <div class="basis-1/4 flex flex-col justify-center items-center">
+                                ${rupiahPrice(dataAirline.price)}
                             </div>
                         </div>
-                        <div class="flex-1 flex items-end justify-end">
-                            <button class="border rounded-xl bg-yellow-300 w-24 h-7 hover:scale-105 mr-3" 
-                            onclick="addBooking(
-                            ${dataAirline.id}, 
-                            ${dataAirline.is_cabin}, 
-                            ${dataAirline.baggage}, 
-                            '${dataAirline.city_from}', 
-                            '${dataAirline.city_to}', 
-                            ${dataAirline.price})
-                            ">Pilih</button>
+                        <div class="flex flex-row text-sm pb-2">
+                            <div class="flex-1 flex flex-row">
+                                <div class="flex flex-row items-center justify-center">
+                                    <p>${getDay} ${getMonth} ${getYear}</p>
+                                </div>
+                                <div class="flex flex-row items-center justify-center ml-7">
+                                    <img src="../assets/img/baggage.png" alt="Baggage" class="w-8 h-5">
+                                    <p class="text-[12px]">${dataAirline.baggage}</p>
+                                    <div class="ml-7">${cabinAirline}</div>
+                                </div>
+                            </div>
+                            <div class="flex-1 flex items-end justify-end">
+                                ${buttonChoose}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `
-        )
-    }).join('')
-
+            `
+        }catch(err){
+            console.error(err)
+        }
+    }
 }
 
 const filterAllAirline = () => {
 
-    let minPrice = parseInt(document.getElementById('firstPrice').value) || 0
-    let maxPrice = parseInt(document.getElementById('secondPrice').value) || Infinity
+    let minimumPrice = realNumber(minPrice.value) || 0
+    let maximumPrice = realNumber(maxPrice.value) || Infinity
 
     let selectBaggage = Array.from(document.querySelectorAll('.baggageCheckbox:checked')).map(checkbox => parseInt(checkbox.value))
 
@@ -203,7 +221,7 @@ const filterAllAirline = () => {
     let filterCompany = filterAirline.filter(airline => {
         let selectedBaggage =  selectBaggage.length === 0 || selectBaggage.includes(airline.baggage)
         let selectedCabin = selectCabin === null || selectCabin === airline.is_cabin
-        let selectPrice = airline.price >= minPrice && airline.price <= maxPrice
+        let selectPrice = airline.price >= minimumPrice && airline.price <= maximumPrice
 
        return selectedBaggage && selectedCabin && selectPrice
     })
@@ -243,7 +261,8 @@ const addBooking = async (id, is_cabin, baggage, city_from, city_to, price) => {
                 email : jsonUser.email,
                 baggage : baggage,
                 is_cabin : is_cabin,
-                status : "Process"
+                status : "Process",
+                date_departure : getAirline.date_departure
         }
         let queryData = encodeURIComponent(JSON.stringify(sendBooking))
     setTimeout(() => {
@@ -252,8 +271,6 @@ const addBooking = async (id, is_cabin, baggage, city_from, city_to, price) => {
     }else{
         console.log("Data Tidak Tersedia")
     }
-
-
 }
 
 document.querySelectorAll('.baggageCheckbox').forEach(checkbox => {
@@ -284,6 +301,27 @@ document.getElementById('filterBtn').addEventListener('click', (e) => {
         })
     }
 })
+
+minPrice.addEventListener('input', (e) => {
+    e.preventDefault()
+
+    let deleteString = parseInt(e.target.value.replace(/[^0-9]/g, '')) || 0;
+    let formatNumberMin = rupiahNumber(deleteString);
+
+    e.target.value = formatNumberMin;
+
+    e.target.setAttribute('data-raw-value', deleteString);
+});
+
+maxPrice.addEventListener('input', (e) => {
+    e.preventDefault()
+    
+    let deleteString = parseInt(e.target.value.replace(/[^0-9]/g, '')) || 0;
+    let formatNumberMax = rupiahNumber(deleteString);
+    e.target.value = formatNumberMax;
+
+    e.target.setAttribute('data-raw-value', deleteString);
+});
 
 // checkLoginUser()
 flightAirline()
