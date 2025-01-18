@@ -6,16 +6,57 @@ let filterAirline = []
 let stateeButton = 0;
 let flightId = 0
 let statee = 0;
+let getUser = localStorage.getItem('UserLogin')
+let jsonUser = JSON.parse(getUser)
 
-const loadHeader = async () => {
-
-    const headerPage = document.getElementById('header-page')
+const checkAdmin = async () => {
+    // data buat Beckend
+    if(getUser == null){
+        Swal.fire({
+            icon: "error",
+            title: "Pemberitahuan",
+            text: "Login Terlebih Dahulu!",
+          }).then(() => {
+          setTimeout(() => {
+              window.location.href = './login.html'
+          }, 1000)})
+    }
+    const checkUser = {
+        user_id : jsonUser.userId,
+        email: jsonUser.email,
+        roles: jsonUser.roles
+      };
     try{
-        let headerResponse = await fetch('../components/header.html')
-        let headerHTML = await headerResponse.text()
-        headerPage.innerHTML = headerHTML
-    }catch(error){
-        console.error("Message ===> ", error)
+      // kirim data ke beckend
+      await axios.post("http://localhost:3002/check-admin", checkUser)
+      .then(() =>{})
+      .catch((err) => {
+        console.error(err)
+        if (err.status === 401) {
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Email Salah",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './login.html'
+              }, 2000)})
+      }else if(err.status === 403 ){
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Anda Bukan Admin !",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './login.html'
+              }, 2000)})
+        }
+      })
+      
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -79,7 +120,7 @@ const renderAirline = (filterCompany) => {
         }
    
         return(`
-            <div class="airlineDiv my-10 w-11/12 bg-[#8b8a8a6c] rounded-xl">
+            <div class="airlineDiv my-10 w-11/12 bg-[#E0F7FA] rounded-xl">
                 <div class="flex flex-col space-y-10 space-x-2">
                     <div class="flex flex-row tracking-wider mt-3">
                         <div class="basis-1/4">
@@ -305,7 +346,24 @@ document.getElementById('filterBtn').addEventListener('click', (e) => {
     }
 })
 
+document.getElementById('btn-signOut').addEventListener('click', (e) => {
+    e.preventDefault()
 
+    try{
+        Swal.fire({
+            icon: "success",
+            title: "Pemberitahuan",
+            text: "Logout Berhasil",
+          })
+        localStorage.removeItem("UserLogin")
+        setTimeout(() => {
+            window.location.href = './login.html'
+        }, 2000);
+    }catch(error){
+        console.error("Message ===> ", error)
+    }
+})
+
+checkAdmin()
 flightAirline()
-window.onload = loadHeader;
 

@@ -7,6 +7,48 @@ let routeArrival = document.getElementById('routeArrival')
 let dateDeparture = document.getElementById('date-picker')
 let dataArray = []
 let checkUser = localStorage.getItem("UserLogin")
+let jsonUser = JSON.parse(checkUser)
+
+const checkLogin = async () => {
+
+    const checkData = {
+        user_id : jsonUser.userId,
+        email: jsonUser.email,
+        roles: jsonUser.roles
+      };
+    try{
+      // kirim data ke beckend
+      await axios.post("http://localhost:3002/check-user", checkData)
+      .then(() =>{})
+      .catch((err) => {
+        console.error(err)
+        if (err.status === 401) {
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Email Salah",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+      }else if(err.status === 403){
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Anda Bukan User, Login Terlebih Dahulu!",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+        }
+      })
+      
+    }catch(err){
+        console.log(err);
+    }
+}
 
 const fetchCities = () =>{
 
@@ -163,10 +205,6 @@ const userFeature = () =>{
         let userDiv = document.createElement('div')
         let userAuth = document.getElementById('userAuth')
 
-
-        let getUser = localStorage.getItem("UserLogin")
-        let jsonUser = JSON.parse(getUser)
-
         if(checkUser == null){
             userDiv.innerHTML = 
             `
@@ -217,7 +255,9 @@ const dataCities = (data) =>{
 const signInBtn = () => {
  
     try {
+        setTimeout(() => {
         window.location.href = './pages/login.html'
+    }, 2000);
         
     }catch(error) {
         console.error("Message", error)
@@ -226,7 +266,9 @@ const signInBtn = () => {
 
 const signUpBtn = () => {
     try {
-       window.location.href = './pages/register.html'
+        setTimeout(() => {
+            window.location.href = './pages/register.html'
+        }, 2000);
     }catch(error) {
         console.error("Message ===> ", error)
     }
@@ -332,7 +374,7 @@ document.getElementById('flightRoute-btn').addEventListener('click', async (e) =
     }
 })
 
-
+checkLogin()
 fetchCities()
 userFeature()
 datePicker()

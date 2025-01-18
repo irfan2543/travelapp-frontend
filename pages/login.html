@@ -135,18 +135,34 @@
               userId: response.data.userId,
               email: response.data.email,
               fullname: `${response.data.firstName} ${response.data.lastname}`,
+              roles : response.data.roles
             };
-
-            let sessionLoginUser = localStorage.setItem(
-              "UserLogin",
-              JSON.stringify(dataSession)
-            );
-            window.location.href = "../index.html";
+              if(response.data.roles == "admin"){
+                Swal.fire({
+                  icon: "success",
+                  title: "Login Berhasil",
+                  text: `Halo, Admin ${dataSession.fullname}`,
+                });
+                let sessionLoginUser = localStorage.setItem("UserLogin",JSON.stringify(dataSession));
+                setTimeout(() => {
+                  window.location.href = './admin.html'
+              }, 2000);
+            }else{
+                Swal.fire({
+                  icon: "success",
+                  title: "Login Berhasil",
+                  text: `Halo, User ${dataSession.fullname}`,
+                });
+                  let sessionLoginUser = localStorage.setItem("UserLogin",JSON.stringify(dataSession));
+                  setTimeout(() => {
+                    window.location.href = '../index.html'
+                }, 2000);
+            }
           } else {
             Swal.fire({
               icon: "error",
               title: "Login Gagal..",
-              text: response.data.message || "Email Atau Password Salah!",
+              text: "Email Atau Password Salah!",
             });
           }
         });
