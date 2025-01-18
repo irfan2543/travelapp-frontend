@@ -9,41 +9,49 @@ let minPrice = document.getElementById('firstPrice')
 let maxPrice = document.getElementById('secondPrice')
 let statee = 0;
 let filterAirline = []
+let checkUser = localStorage.getItem("UserLogin")
+let jsonUser = JSON.parse(checkUser)
 
+const checkLogin = async () => {
 
-
-// const checkLoginUser = async () => {
-//     let getUser = localStorage.getItem("UserLogin")
-//     let jsonUser = JSON.parse(getUser)
-//     try{
-//         if(getUser == null){
-//             window.location.href = 'index.html'
-            
-//         }else{
-//             let checkEmail = {
-//                 id: jsonUser.userId,
-//                 email : jsonUser.email
-//             }
-//             let response = await axios.post("http://localhost:3002/checkUser", checkEmail)
-//                 .then((dataUser) => {
-//                     // Jika respons berhasil
-//                     console.log("Response:", dataUser.data);
-//                 }).catch((err) => {
-//                     if(err.response){
-//                         if(err.response.status === 400){
-//                             Swal.fire("Login Dulu Bro!");
-//                             localStorage.removeItem("UserLogin")
-//                             setTimeout(() => {
-//                                  window.location.href = '../index.html'
-//                             }, 1000);
-//                         }
-//                     }
-//                 })
-//         }
-//     }catch(err){
-//         console.error(err)
-//     }
-// }
+    const checkData = {
+        user_id : jsonUser.userId,
+        email: jsonUser.email,
+        roles: jsonUser.roles
+      };
+    try{
+      // kirim data ke beckend
+      await axios.post("http://localhost:3002/check-user", checkData)
+      .then(() =>{})
+      .catch((err) => {
+        console.error(err)
+        if (err.status === 401) {
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Email Salah",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+      }else if(err.status === 403){
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Anda Bukan User, Login Terlebih Dahulu!",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+        }
+      })
+      
+    }catch(err){
+        console.log(err);
+    }
+}
 
 const loadHeader = async () => {
 
@@ -115,6 +123,7 @@ const renderAirline = async (filterCompany) => {
     for(let dataAirline of filterCompany ) {
        
         let dataDate = new Date(dataAirline.date_departure).toISOString().split('T')[0]
+        
         let getDay = new Date(dataAirline.date_departure).getDate();
         let getMonth = new Date(dataAirline.date_departure).toLocaleString('id-ID', { month: 'long' });
         let getYear = new Date(dataAirline.date_departure).getFullYear();
@@ -323,7 +332,7 @@ maxPrice.addEventListener('input', (e) => {
     e.target.setAttribute('data-raw-value', deleteString);
 });
 
-// checkLoginUser()
+checkLogin()
 flightAirline()
 window.onload = loadHeader;
 

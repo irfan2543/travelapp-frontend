@@ -56,6 +56,50 @@
       let urlParams = new URLSearchParams(window.location.search)
       let getAirline = JSON.parse(decodeURIComponent(urlParams.get('seatBooking')))
       console.log(getAirline)
+      let checkUser = localStorage.getItem("UserLogin")
+      let jsonUser = JSON.parse(checkUser)
+
+      const checkLogin = async () => {
+
+          const checkData = {
+              user_id : jsonUser.userId,
+              email: jsonUser.email,
+              roles: jsonUser.roles
+            };
+          try{
+            // kirim data ke beckend
+            await axios.post("http://localhost:3002/check-user", checkData)
+            .then(() =>{})
+            .catch((err) => {
+              console.error(err)
+              if (err.status === 401) {
+                  localStorage.removeItem('UserLogin')
+                  Swal.fire({
+                      icon: "error",
+                      title: "Pemberitahuan",
+                      text: "Email Salah",
+                    }).then(() => {
+                    setTimeout(() => {
+                        window.location.href = './pages/login.html'
+                    }, 2000)})
+            }else if(err.status === 403){
+                  localStorage.removeItem('UserLogin')
+                  Swal.fire({
+                      icon: "error",
+                      title: "Pemberitahuan",
+                      text: "Anda Bukan User, Login Terlebih Dahulu!",
+                    }).then(() => {
+                    setTimeout(() => {
+                        window.location.href = './pages/login.html'
+                    }, 2000)})
+              }
+            })
+            
+          }catch(err){
+              console.log(err);
+          }
+      }
+
       let seatChooses = getAirline.flight_seats
       seatChooses.forEach((data) => {
         let jsonData = JSON.parse(data)
@@ -131,6 +175,7 @@
             }
           });
         })
+        checkLogin()
     </script>
   </body>
 </html>

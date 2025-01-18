@@ -36,6 +36,50 @@
     <div id="footerPage" class="w-full"></div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
     <script>
+        let checkUser = localStorage.getItem("UserLogin")
+        let jsonUser = JSON.parse(checkUser)
+
+        const checkLogin = async () => {
+
+            const checkData = {
+                user_id : jsonUser.userId,
+                email: jsonUser.email,
+                roles: jsonUser.roles
+            };
+            try{
+            // kirim data ke beckend
+            await axios.post("http://localhost:3002/check-user", checkData)
+            .then(() =>{})
+            .catch((err) => {
+                console.error(err)
+                if (err.status === 401) {
+                    localStorage.removeItem('UserLogin')
+                    Swal.fire({
+                        icon: "error",
+                        title: "Pemberitahuan",
+                        text: "Email Salah",
+                    }).then(() => {
+                    setTimeout(() => {
+                        window.location.href = './pages/login.html'
+                    }, 2000)})
+            }else if(err.status === 403){
+                    localStorage.removeItem('UserLogin')
+                    Swal.fire({
+                        icon: "error",
+                        title: "Pemberitahuan",
+                        text: "Anda Bukan User, Login Terlebih Dahulu!",
+                    }).then(() => {
+                    setTimeout(() => {
+                        window.location.href = './pages/login.html'
+                    }, 2000)})
+                }
+            })
+            
+            }catch(err){
+                console.log(err);
+            }
+        }
+
         const loadFooter = async () => {
 
             const footerPage = document.getElementById('footerPage')
@@ -49,7 +93,6 @@
         }
 
         window.onload = loadFooter;
-
 
         let emailUser = localStorage.getItem("UserLogin")
         let emailJson = JSON.parse(emailUser)
@@ -104,6 +147,7 @@
                 window.location.href = "../index.html"
             },2000)
         })
+        checkLogin()
     </script>  
 </body>  
 </html>  

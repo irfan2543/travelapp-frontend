@@ -16,6 +16,51 @@ let seatBooking = []
 let seatDiv = document.getElementById("seatDiv");
 let totalPrice = 0
 
+let checkUser = localStorage.getItem("UserLogin")
+let jsonUser = JSON.parse(checkUser)
+
+const checkLogin = async () => {
+
+    const checkData = {
+        user_id : jsonUser.userId,
+        email: jsonUser.email,
+        roles: jsonUser.roles
+      };
+    try{
+      // kirim data ke beckend
+      await axios.post("http://localhost:3002/check-user", checkData)
+      .then(() =>{})
+      .catch((err) => {
+        console.error(err)
+        if (err.status === 401) {
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Email Salah",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+      }else if(err.status === 403){
+            localStorage.removeItem('UserLogin')
+            Swal.fire({
+                icon: "error",
+                title: "Pemberitahuan",
+                text: "Anda Bukan User, Login Terlebih Dahulu!",
+              }).then(() => {
+              setTimeout(() => {
+                  window.location.href = './pages/login.html'
+              }, 2000)})
+        }
+      })
+      
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
 const loadHeader = async () => {
     const headerPage = document.getElementById("header-page");
     try {
@@ -183,4 +228,5 @@ const removeSeatFromBooked = (seatNumber) => {
     });
 };
 
+checkLogin()
 fetchSeat()
