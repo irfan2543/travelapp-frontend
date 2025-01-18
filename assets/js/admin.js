@@ -237,6 +237,7 @@ const makeFlight = () => {
     let dateDepartureFinal = moment(date_departure).format("yyyy-MM-DD HH:mm:ss")
     let dateArrivalFinal = moment(date_arrival).format("yyyy-MM-DD HH:mm:ss")
 
+    console.log(dateDepartureFinal)
     let newFlight = {
                 
         "id_maskapai" : document.getElementById('airlineCompany').value, 
@@ -303,18 +304,46 @@ const filterAllAirline = () => {
     let maxPrice = parseInt(document.getElementById('secondPrice').value) || Infinity
 
     let selectBaggage = Array.from(document.querySelectorAll('.baggageCheckbox:checked')).map(checkbox => parseInt(checkbox.value))
-
+    let selectCityDeparture= document.getElementById('city_departure').value;
+    let selectCityArrival= document.getElementById('city_arrival').value;
     let selectCabin = document.getElementById('cabin')?.checked ? parseInt(document.getElementById('cabin').value) : null
 
     let filterCompany = filterAirline.filter(airline => {
         let selectedBaggage =  selectBaggage.length === 0 || selectBaggage.includes(airline.baggage)
+        let selectedCityDeparture = selectCityDeparture === airline.city_from
+        let selectedCityArrival = selectCityArrival === airline.city_to
         let selectedCabin = selectCabin === null || selectCabin === airline.is_cabin
         let selectPrice = airline.price >= minPrice && airline.price <= maxPrice
 
-       return selectedBaggage && selectedCabin && selectPrice
+       return selectedBaggage && selectedCabin && selectPrice && selectedCityDeparture && selectedCityArrival
     })
     console.log(filterCompany)
     renderAirline(filterCompany)
+}
+
+const validateDateTime = () => {
+    let date_departure = document.getElementById('date_departure').value;
+    let date_arrival = document.getElementById('date_arrival').value;
+
+    let now = moment().format("YYYY-MM-DDTHH:mm");
+
+    if (date_departure < now) {
+        Swal.fire({
+            icon: "error",
+            title: "Pemberitahuan",
+            text: "Tanggal dan Waktu Kurang Dari Sekarang",
+          })
+        document.getElementById('date_departure').value = "";  
+    }
+
+    if (date_arrival < now) {
+        Swal.fire({
+            icon: "error",
+            title: "Pemberitahuan",
+            text: "Tanggal dan Waktu Kurang Dari Sekarang",
+          })
+        document.getElementById('date_arrival').value = "";  
+    }
 }
 
 document.querySelectorAll('.baggageCheckbox').forEach(checkbox => {
@@ -322,6 +351,8 @@ document.querySelectorAll('.baggageCheckbox').forEach(checkbox => {
 })
 
 document.getElementById('cabin').addEventListener('change', filterAllAirline)
+document.getElementById('city_departure').addEventListener('change', filterAllAirline)
+document.getElementById('city_arrival').addEventListener('change', filterAllAirline)
 
 document.getElementById('firstPrice').addEventListener('input', filterAllAirline)
 
@@ -363,6 +394,10 @@ document.getElementById('btn-signOut').addEventListener('click', (e) => {
         console.error("Message ===> ", error)
     }
 })
+
+document.getElementById('date_departure').addEventListener('change', validateDateTime);
+
+document.getElementById('date_arrival').addEventListener('change', validateDateTime);
 
 checkAdmin()
 flightAirline()

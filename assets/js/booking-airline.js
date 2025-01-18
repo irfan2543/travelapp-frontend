@@ -123,6 +123,7 @@ const renderAirline = async (filterCompany) => {
     for(let dataAirline of filterCompany ) {
        
         let dataDate = new Date(dataAirline.date_departure).toISOString().split('T')[0]
+        
         let getDay = new Date(dataAirline.date_departure).getDate();
         let getMonth = new Date(dataAirline.date_departure).toLocaleString('id-ID', { month: 'long' });
         let getYear = new Date(dataAirline.date_departure).getFullYear();

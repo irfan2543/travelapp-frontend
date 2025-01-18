@@ -125,46 +125,48 @@
           };
 
           // kirim data ke beckend
-          const response = await axios.post(
-            "http://localhost:3002/login",
-            dataBuatBeckend
-          );
-          
-          if (response.status === 200) {
-            let dataSession = {
-              userId: response.data.userId,
-              email: response.data.email,
-              fullname: `${response.data.firstName} ${response.data.lastname}`,
-              roles : response.data.roles
-            };
-              if(response.data.roles == "admin"){
-                Swal.fire({
-                  icon: "success",
-                  title: "Login Berhasil",
-                  text: `Halo, Admin ${dataSession.fullname}`,
-                });
-                let sessionLoginUser = localStorage.setItem("UserLogin",JSON.stringify(dataSession));
-                setTimeout(() => {
-                  window.location.href = './admin.html'
-              }, 2000);
-            }else{
-                Swal.fire({
-                  icon: "success",
-                  title: "Login Berhasil",
-                  text: `Halo, User ${dataSession.fullname}`,
-                });
+           await axios.post("http://localhost:3002/login",dataBuatBeckend)
+            .then((response) => {
+              
+              let dataSession = {
+                userId: response.data.userId,
+                email: response.data.email,
+                fullname: `${response.data.firstName} ${response.data.lastname}`,
+                roles : response.data.roles
+              };
+              
+              if(response.status === 200){
+                if(response.data.roles == "admin"){
+                  Swal.fire({
+                    icon: "success",
+                    title: "Login Berhasil",
+                    text: `Halo, Admin ${dataSession.fullname}`,
+                  });
                   let sessionLoginUser = localStorage.setItem("UserLogin",JSON.stringify(dataSession));
                   setTimeout(() => {
-                    window.location.href = '../index.html'
+                    window.location.href = './admin.html'
                 }, 2000);
+                }else{
+                  Swal.fire({
+                    icon: "success",
+                    title: "Login Berhasil",
+                    text: `Halo, User ${dataSession.fullname}`,
+                  });
+                    let sessionLoginUser = localStorage.setItem("UserLogin",JSON.stringify(dataSession));
+                    setTimeout(() => {
+                      window.location.href = '../index.html'
+                  }, 2000);
+              }
             }
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Login Gagal..",
-              text: "Email Atau Password Salah!",
-            });
+          }).catch((err) => {
+            if(err.status === 401){
+              Swal.fire({
+                icon: "error",
+                title: "Login Gagal..",
+                text: "Email Atau Password Salah!",
+              });
           }
+        })
         });
       window.onload = loadHeader;
     </script>
